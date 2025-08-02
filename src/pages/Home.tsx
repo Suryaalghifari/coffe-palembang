@@ -32,7 +32,6 @@ const Home = () => {
       title: "Rempah-Rempah Pilihan",
     },
   ];
-
   const galleryImages = [
     {
       url: "https://images.pexels.com/photos/894695/pexels-photo-894695.jpeg",
