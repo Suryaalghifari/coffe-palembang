@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, Coffee, ChevronDown } from 'lucide-react';
-import { useLanguage } from '../contexts/LanguageContext';
-import LanguageSelector from './LanguageSelector';
+import React, { useState } from "react";
+import { Link, useLocation } from "react-router-dom";
+import { Menu, X, Coffee, ChevronDown } from "lucide-react";
+import { useLanguage } from "../contexts/LanguageContext";
+import LanguageSelector from "./LanguageSelector";
 
 const Header = () => {
   const { t } = useLanguage();
@@ -11,19 +11,35 @@ const Header = () => {
   const location = useLocation();
 
   const productCategories = [
-    { name: t('nav.allProducts'), href: '/products', category: 'all' },
-    { name: t('nav.coffee'), href: '/products?category=coffee', category: 'coffee' },
-    { name: t('nav.cloves'), href: '/products?category=cloves', category: 'cloves' },
-    { name: t('nav.spices'), href: '/products?category=spices', category: 'spices' },
-    { name: t('nav.herbs'), href: '/products?category=herbs', category: 'herbs' }
+    { name: t("nav.allProducts"), href: "/products", category: "all" },
+    {
+      name: t("nav.coffee"),
+      href: "/products?category=coffee",
+      category: "coffee",
+    },
+    {
+      name: t("nav.cloves"),
+      href: "/products?category=cloves",
+      category: "cloves",
+    },
+    {
+      name: t("nav.spices"),
+      href: "/products?category=spices",
+      category: "spices",
+    },
+    {
+      name: t("nav.herbs"),
+      href: "/products?category=herbs",
+      category: "herbs",
+    },
   ];
 
   const navigation = [
-    { name: t('nav.home'), href: '/' },
-    { name: t('nav.howToOrder'), href: '/how-to-order' },
-    { name: t('nav.gallery'), href: '/gallery' },
-    { name: t('nav.contact'), href: '/contact' },
-    { name: t('nav.terms'), href: '/terms' },
+    { name: t("nav.home"), href: "/" },
+    { name: t("nav.howToOrder"), href: "/how-to-order" },
+    { name: t("nav.gallery"), href: "/gallery" },
+    { name: t("nav.contact"), href: "/contact" },
+    { name: t("nav.terms"), href: "/terms" },
   ];
 
   const isActive = (path: string) => location.pathname === path;
@@ -35,9 +51,9 @@ const Header = () => {
           {/* Logo */}
           <div className="flex items-center space-x-2">
             <Link to="/" className="flex items-center space-x-2">
-              <Coffee className="h-7 w-7 text-amber-800" />
+              <img src="assets/header1.jpg" alt="Logo" className="h-7 w-7" />
               <span className="font-playfair text-xl font-bold text-amber-800">
-                Kopi Nusantara
+                {/* Teks Disamping */}
               </span>
             </Link>
           </div>
@@ -52,8 +68,8 @@ const Header = () => {
                 to={item.href}
                 className={`text-sm font-medium transition-colors duration-200 ${
                   isActive(item.href)
-                    ? 'text-amber-800 border-b-2 border-amber-800 pb-1'
-                    : 'text-gray-700 hover:text-amber-800'
+                    ? "text-amber-800 border-b-2 border-amber-800 pb-1"
+                    : "text-gray-700 hover:text-amber-800"
                 }`}
               >
                 {item.name}
@@ -68,15 +84,15 @@ const Header = () => {
             >
               <button
                 className={`flex items-center text-sm font-medium transition-colors duration-200 ${
-                  location.pathname.includes('/product')
-                    ? 'text-amber-800 border-b-2 border-amber-800 pb-1'
-                    : 'text-gray-700 hover:text-amber-800'
+                  location.pathname.includes("/product")
+                    ? "text-amber-800 border-b-2 border-amber-800 pb-1"
+                    : "text-gray-700 hover:text-amber-800"
                 }`}
               >
-                {t('nav.products')}
+                {t("nav.products")}
                 <ChevronDown
                   className={`ml-1 h-4 w-4 transition-transform duration-200 ${
-                    isProductDropdownOpen ? 'rotate-180' : ''
+                    isProductDropdownOpen ? "rotate-180" : ""
                   }`}
                 />
               </button>
@@ -103,7 +119,7 @@ const Header = () => {
               to="/contact"
               className="ml-3 bg-amber-800 text-white text-sm px-5 py-1.5 rounded-xl hover:bg-amber-900 transition duration-200"
             >
-              {t('nav.orderNow')}
+              {t("nav.orderNow")}
             </Link>
           </div>
 
@@ -113,7 +129,11 @@ const Header = () => {
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               className="text-gray-700 hover:text-amber-800"
             >
-              {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+              {isMenuOpen ? (
+                <X className="h-6 w-6" />
+              ) : (
+                <Menu className="h-6 w-6" />
+              )}
             </button>
           </div>
         </div>
@@ -132,8 +152,8 @@ const Header = () => {
                   to={item.href}
                   className={`block px-3 py-2 text-base font-medium rounded transition ${
                     isActive(item.href)
-                      ? 'text-amber-800 bg-amber-50'
-                      : 'text-gray-700 hover:text-amber-800 hover:bg-amber-50'
+                      ? "text-amber-800 bg-amber-50"
+                      : "text-gray-700 hover:text-amber-800 hover:bg-amber-50"
                   }`}
                   onClick={() => setIsMenuOpen(false)}
                 >
@@ -144,7 +164,7 @@ const Header = () => {
               {/* Mobile Product Menu */}
               <div className="px-3 pt-2">
                 <span className="text-base font-medium text-gray-700 block mb-1">
-                  {t('nav.products')}
+                  {t("nav.products")}
                 </span>
                 <div className="pl-4 space-y-1">
                   {productCategories.map((category) => (
@@ -165,7 +185,7 @@ const Header = () => {
                 className="block bg-amber-800 text-white px-6 py-2 rounded-full hover:bg-amber-900 transition mx-3 text-center"
                 onClick={() => setIsMenuOpen(false)}
               >
-                {t('nav.orderNow')}
+                {t("nav.orderNow")}
               </Link>
             </div>
           </div>
