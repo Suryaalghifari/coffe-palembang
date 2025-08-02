@@ -20,15 +20,15 @@ const Home = () => {
 
   const heroImages = [
     {
-      url: "assets/header1.jpg",
+      url: "/assets/header1.jpg",
       title: "Kopi Premium Indonesia",
     },
     {
-      url: "assets/header2.jpg",
+      url: "/assets/header2.jpg",
       title: "Proses Roasting Berkualitas",
     },
     {
-      url: "assets/header3.jpg",
+      url: "/assets/header3.jpg",
       title: "Rempah-Rempah Pilihan",
     },
   ];
