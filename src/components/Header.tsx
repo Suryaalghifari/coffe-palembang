@@ -51,7 +51,11 @@ const Header = () => {
           {/* Logo */}
           <div className="flex items-center space-x-2">
             <Link to="/" className="flex items-center space-x-2">
-              <img src="assets/header1.jpg" alt="Logo" className="h-7 w-7" />
+              <img
+                src="/assets/logo/logo.png"
+                alt="Logo"
+                className="h-14 w-14 md:h-14 md:w-14 object-contain"
+              />
               <span className="font-playfair text-xl font-bold text-amber-800">
                 {/* Teks Disamping */}
               </span>

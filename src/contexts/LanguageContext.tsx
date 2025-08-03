@@ -27,14 +27,13 @@ const translations = {
     // Home Page
     "home.hero.title": "CV Batanghari",
     "home.hero.subtitle": "Sembilan Makmur",
-    "home.hero.description":
-      "Menghadirkan citarasa otentik Indonesia dengan kualitas premium langsung dari petani terpilih ke meja Anda",
     "home.hero.viewProducts": "Lihat Produk",
     "home.hero.contactUs": "Hubungi Kami",
 
-    "home.about.title": "Tentang Kopi Nusantara",
+    "home.about.title": "Dari Pagar Alam untuk Nusantara",
+
     "home.about.description":
-      "Sejak 2018, kami berkomitmen menjadi jembatan antara petani lokal dan pecinta kopi serta rempah-rempah. Dengan proses seleksi ketat dan standar kualitas internasional, setiap produk kami menghadirkan kekayaan rasa dan aroma Indonesia yang autentik.",
+      "Dari ladang kopi dan rempah di dataran tinggi Pagar Alam, kami tumbuh bersama para petani sejak 2019. Dengan kualitas unggul dan komitmen kuat, kami hadir untuk membawa rasa Indonesia ke dunia.",
 
     "home.whyUs.title": "Mengapa Memilih Kami?",
     "home.whyUs.quality.title": "Kualitas Premium",
@@ -60,12 +59,19 @@ const translations = {
     "home.gallery.viewGallery": "Lihat Galeri Lengkap",
 
     "home.team.title": "Tim Kami",
-    "home.team.owner.name": "Budi Santoso",
-    "home.team.owner.role": "Founder & CEO",
-    "home.team.manager.name": "Sari Dewi",
-    "home.team.manager.role": "Production Manager",
-    "home.team.expert.name": "Ahmad Rizki",
-    "home.team.expert.role": "Quality Expert",
+    "home.team.owner.name": "MUHAMMAD RYAN GUMAY",
+    "home.team.owner.role": "FOUNDER & CEO",
+    "home.team.manager.name": "YOSEP P GUMAY",
+    "home.team.manager.role": "BUSINESS DEVELOPMENT OFFICER",
+    "home.team.expert.name": "LISA AYU HIDAYATI",
+    "home.team.expert.role": "DOMISTIC SALES",
+
+    "home.team.owner.description":
+      "Pendiri dan pemimpin utama yang membentuk arah strategis perusahaan sejak awal berdiri. Berpengalaman luas di dunia kopi dan rempah.",
+    "home.team.manager.description":
+      "Bertanggung jawab mengembangkan jaringan bisnis dan kemitraan strategis untuk pertumbuhan perusahaan di pasar lokal maupun global.",
+    "home.team.expert.description":
+      "Mengelola penjualan domestik dan menjaga hubungan baik dengan klien serta mitra distribusi di seluruh Indonesia.",
 
     // Common
     "common.learnMore": "Pelajari Lebih Lanjut",

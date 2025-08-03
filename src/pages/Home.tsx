@@ -22,16 +22,23 @@ const Home = () => {
     {
       url: "/assets/header1.jpg",
       title: "Kopi Premium Indonesia",
+      color: "bg-yellow-400",
+      width: "w-24",
     },
     {
       url: "/assets/header2.jpg",
       title: "Proses Roasting Berkualitas",
+      color: "bg-green-400",
+      width: "w-16",
     },
     {
       url: "/assets/header3.jpg",
       title: "Rempah-Rempah Pilihan",
+      color: "bg-amber-500",
+      width: "w-32",
     },
   ];
+
   const galleryImages = [
     {
       url: "https://images.pexels.com/photos/894695/pexels-photo-894695.jpeg",
@@ -79,22 +86,19 @@ const Home = () => {
       name: t("home.team.owner.name"),
       role: t("home.team.owner.role"),
       avatar: "👨‍💼",
-      description:
-        "Memimpin visi perusahaan dengan pengalaman 15+ tahun di industri kopi",
+      description: t("home.team.owner.description"),
     },
     {
       name: t("home.team.manager.name"),
       role: t("home.team.manager.role"),
-      avatar: "👩‍🔬",
-      description:
-        "Mengawasi seluruh proses produksi dengan standar kualitas tertinggi",
+      avatar: "👨‍🌾",
+      description: t("home.team.manager.description"),
     },
     {
       name: t("home.team.expert.name"),
       role: t("home.team.expert.role"),
-      avatar: "👨‍🌾",
-      description:
-        "Ahli dalam seleksi dan grading kopi serta rempah-rempah premium",
+      avatar: "👩‍🔬",
+      description: t("home.team.expert.description"),
     },
   ];
 
@@ -218,9 +222,14 @@ const Home = () => {
                 {t("home.hero.subtitle")}
               </span>
             </h1>
-            <p className="text-xl md:text-2xl mb-8 leading-relaxed">
-              {t("home.hero.description")}
-            </p>
+
+            <div className="mb-10">
+              <div
+                aria-hidden="true"
+                className={`h-[2px] rounded-full mx-0 md:mx-auto transition-all duration-700 ${heroImages[currentSlide].color} ${heroImages[currentSlide].width}`}
+              />
+            </div>
+
             <div className="flex flex-col sm:flex-row gap-4">
               <Link
                 to="/products"
