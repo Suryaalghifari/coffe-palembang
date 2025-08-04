@@ -20,11 +20,13 @@ const Footer = () => {
                 CV. BatangHari Sembilan Makmur
               </span>
             </div>
+
             <p className="text-gray-600 mb-4 leading-relaxed">
-              UMKM yang berdedikasi menghadirkan kopi dan rempah-rempah terbaik
-              Nusantara dengan kualitas premium dan citarasa otentik yang telah
-              dipercaya sejak 2018.
+              Dari Pagar Alam, kami hadir bersama para petani untuk menghadirkan
+              kopi dan rempah terbaik Nusantara. Mengusung kualitas unggul dan
+              rasa otentik Indonesia sejak 2019.
             </p>
+
             <div className="flex space-x-4">
               <a
                 href="#"
@@ -99,7 +101,8 @@ const Footer = () => {
               <div className="flex items-center space-x-2">
                 <MapPin className="h-4 w-4 text-amber-600" />
                 <span className="text-gray-600 text-sm">
-                  Jl. Merdeka No. 123, Yogyakarta 55161
+                  Jl R Soeprapto no 13. Pagar Alam, Tanjung Payang Sumatera
+                  Selatan - Indonesia
                 </span>
               </div>
               <div className="flex items-center space-x-2">
@@ -109,7 +112,7 @@ const Footer = () => {
               <div className="flex items-center space-x-2">
                 <Mail className="h-4 w-4 text-amber-600" />
                 <span className="text-gray-600 text-sm">
-                  info@kopinusantara.com
+                  info@BatangHari.com
                 </span>
               </div>
             </div>
@@ -118,8 +121,7 @@ const Footer = () => {
 
         <div className="border-t border-gray-200 mt-8 pt-8 text-center">
           <p className="text-gray-500 text-sm">
-            © 2024 Kopi Nusantara. All rights reserved. Made with ❤️ for
-            Indonesian Coffee & Spices
+            © 2025 - Cv BatangHari Sembilan Makmur
           </p>
         </div>
       </div>
