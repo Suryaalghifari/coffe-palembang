@@ -1,5 +1,5 @@
 import React from "react";
-import { MessageCircle } from "lucide-react";
+import { Icon } from "@iconify/react";
 
 const FloatingWhatsApp = () => {
   const handleWhatsAppClick = () => {
@@ -13,14 +13,23 @@ const FloatingWhatsApp = () => {
   };
 
   return (
-    <button
-      onClick={handleWhatsAppClick}
-      className="fixed bottom-6 right-6 z-50 flex items-center gap-2 bg-green-500 text-white px-4 py-2 rounded-full shadow-lg hover:bg-green-600 transform hover:scale-105 transition-all duration-300"
-      aria-label="Contact via WhatsApp"
-    >
-      <MessageCircle className="h-5 w-5" />
-      <span className="hidden md:inline text-sm font-medium">Chat di sini</span>
-    </button>
+    <div className="fixed bottom-6 right-6 z-50 flex items-center">
+      {/* Tooltip */}
+      <span className="opacity-0 translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-200 bg-black text-white text-xs rounded px-3 py-1 mr-2 pointer-events-none select-none group-hover:pointer-events-auto">
+        Contact us
+      </span>
+      <button
+        onClick={handleWhatsAppClick}
+        className="group relative bg-[#25D366] p-3 rounded-full shadow-lg hover:scale-110 transition-all duration-300 flex items-center justify-center focus:outline-none"
+        aria-label="Contact via WhatsApp"
+      >
+        <Icon icon="mdi:whatsapp" className="h-7 w-7 text-white" />
+        {/* Tooltip */}
+        <span className="absolute right-full mr-3 top-1/2 -translate-y-1/2 opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto bg-black text-white text-xs rounded px-3 py-1 transition-all duration-200 whitespace-nowrap">
+          Contact us
+        </span>
+      </button>
+    </div>
   );
 };
 

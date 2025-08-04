@@ -1,91 +1,108 @@
-import React, { useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
-import { ArrowRight, ChevronLeft, ChevronRight, Send, Phone, Mail, MapPin } from 'lucide-react';
-import Footer from '../components/Footer';
+import React, { useState } from "react";
+import { useParams, Link } from "react-router-dom";
+import {
+  ArrowRight,
+  ChevronLeft,
+  ChevronRight,
+  Send,
+  Phone,
+  Mail,
+  MapPin,
+} from "lucide-react";
+import Footer from "../components/Footer";
 
 const ProductDetail = () => {
   const { id } = useParams();
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    message: '',
-    quantity: ''
+    name: "",
+    email: "",
+    phone: "",
+    message: "",
+    quantity: "",
   });
 
   // Sample product data - in real app this would come from API
   const product = {
     id: 1,
-    name: 'Kopi Robusta Premium',
-    description: 'Kopi robusta pilihan dengan citarasa kuat dan aroma yang menggugah selera',
+    name: "Kopi Robusta Premium",
+    description:
+      "Kopi robusta pilihan dengan citarasa kuat dan aroma yang menggugah selera",
     fullDescription: `Kopi Robusta Premium kami berasal dari perkebunan kopi terbaik di dataran tinggi Lampung yang memiliki ketinggian optimal untuk menghasilkan biji kopi berkualitas tinggi. Dengan proses seleksi ketat dan pengolahan tradisional yang telah diwariskan turun-temurun, setiap biji kopi telah melalui tahapan sortir manual untuk memastikan hanya biji terbaik yang sampai ke tangan Anda.
 
     Karakteristik unik dari kopi robusta kami adalah tingkat keasaman yang rendah dengan body yang full, menghasilkan rasa yang bold dan earthy dengan sedikit sentuhan cokelat alami. Kandungan kafein yang tinggi menjadikannya pilihan sempurna untuk memulai hari dengan energi penuh.
 
     Proses roasting dilakukan dengan metode medium roast untuk mempertahankan karakter asli biji kopi sambil mengeluarkan aroma dan rasa yang optimal. Setiap batch dipanggang dalam jumlah kecil untuk menjamin kualitas dan kesegaran.`,
     images: [
-      'https://images.pexels.com/photos/894695/pexels-photo-894695.jpeg',
-      'https://images.pexels.com/photos/1793037/pexels-photo-1793037.jpeg',
-      'https://images.pexels.com/photos/4226249/pexels-photo-4226249.jpeg',
-      'https://images.pexels.com/photos/1793031/pexels-photo-1793031.jpeg'
+      "https://images.pexels.com/photos/894695/pexels-photo-894695.jpeg",
+      "https://images.pexels.com/photos/1793037/pexels-photo-1793037.jpeg",
+      "https://images.pexels.com/photos/4226249/pexels-photo-4226249.jpeg",
+      "https://images.pexels.com/photos/1793031/pexels-photo-1793031.jpeg",
     ],
     specifications: {
-      'Asal': 'Lampung, Indonesia',
-      'Varietas': 'Robusta Lampung',
-      'Ketinggian': '700-1200 mdpl',
-      'Proses': 'Natural/Honey Process',
-      'Tingkat Roast': 'Medium Roast',
-      'Kemasan': '250g, 500g, 1kg',
-      'Kadar Air': 'Max 12%',
-      'Defect': 'Max 5%'
+      Asal: "Lampung, Indonesia",
+      Varietas: "Robusta Lampung",
+      Ketinggian: "700-1200 mdpl",
+      Proses: "Natural/Honey Process",
+      "Tingkat Roast": "Medium Roast",
+      Kemasan: "250g, 500g, 1kg",
+      "Kadar Air": "Max 12%",
+      Defect: "Max 5%",
     },
     productionImages: [
       {
-        url: 'https://images.pexels.com/photos/4109743/pexels-photo-4109743.jpeg',
-        title: 'Proses Sortir Manual'
+        url: "https://images.pexels.com/photos/4109743/pexels-photo-4109743.jpeg",
+        title: "Proses Sortir Manual",
       },
       {
-        url: 'https://images.pexels.com/photos/4198027/pexels-photo-4198027.jpeg',
-        title: 'Pengeringan Alami'
-      }
-    ]
+        url: "https://images.pexels.com/photos/4198027/pexels-photo-4198027.jpeg",
+        title: "Pengeringan Alami",
+      },
+    ],
   };
 
   const otherProducts = [
     {
       id: 2,
-      name: 'Kopi Arabika Gayo',
-      image: 'https://images.pexels.com/photos/1793037/pexels-photo-1793037.jpeg',
-      description: 'Kopi arabika asli Aceh dengan karakteristik citarasa fruity'
+      name: "Kopi Arabika Gayo",
+      image:
+        "https://images.pexels.com/photos/1793037/pexels-photo-1793037.jpeg",
+      description:
+        "Kopi arabika asli Aceh dengan karakteristik citarasa fruity",
     },
     {
       id: 3,
-      name: 'Kayu Manis Ceylon',
-      image: 'https://images.pexels.com/photos/4198027/pexels-photo-4198027.jpeg',
-      description: 'Kayu manis Ceylon grade A dengan aroma manis alami'
+      name: "Kayu Manis Ceylon",
+      image:
+        "https://images.pexels.com/photos/4198027/pexels-photo-4198027.jpeg",
+      description: "Kayu manis Ceylon grade A dengan aroma manis alami",
     },
     {
       id: 4,
-      name: 'Lada Hitam Muntok',
-      image: 'https://images.pexels.com/photos/4198019/pexels-photo-4198019.jpeg',
-      description: 'Lada hitam asli Bangka dengan tingkat kepedasan sempurna'
-    }
+      name: "Lada Hitam Muntok",
+      image:
+        "https://images.pexels.com/photos/4198019/pexels-photo-4198019.jpeg",
+      description: "Lada hitam asli Bangka dengan tingkat kepedasan sempurna",
+    },
   ];
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     // Handle form submission
-    console.log('Form submitted:', formData);
-    alert('Terima kasih! Pesanan Anda telah dikirim. Tim kami akan segera menghubungi Anda.');
-    setFormData({ name: '', email: '', phone: '', message: '', quantity: '' });
+    console.log("Form submitted:", formData);
+    alert(
+      "Terima kasih! Pesanan Anda telah dikirim. Tim kami akan segera menghubungi Anda."
+    );
+    setFormData({ name: "", email: "", phone: "", message: "", quantity: "" });
   };
 
   const nextImage = () => {
@@ -93,7 +110,9 @@ const ProductDetail = () => {
   };
 
   const prevImage = () => {
-    setCurrentImageIndex((prev) => (prev - 1 + product.images.length) % product.images.length);
+    setCurrentImageIndex(
+      (prev) => (prev - 1 + product.images.length) % product.images.length
+    );
   };
 
   return (
@@ -102,9 +121,13 @@ const ProductDetail = () => {
       <section className="py-6 bg-white border-b">
         <div className="max-w-7xl mx-auto px-4">
           <nav className="flex items-center space-x-2 text-sm">
-            <Link to="/" className="text-gray-600 hover:text-amber-600">Home</Link>
+            <Link to="/" className="text-gray-600 hover:text-amber-600">
+              Home
+            </Link>
             <span className="text-gray-400">/</span>
-            <Link to="/products" className="text-gray-600 hover:text-amber-600">Products</Link>
+            <Link to="/products" className="text-gray-600 hover:text-amber-600">
+              Products
+            </Link>
             <span className="text-gray-400">/</span>
             <span className="text-amber-600 font-medium">{product.name}</span>
           </nav>
@@ -136,14 +159,14 @@ const ProductDetail = () => {
                   <ChevronRight className="h-6 w-6" />
                 </button>
               </div>
-              
+
               <div className="grid grid-cols-4 gap-4">
                 {product.images.map((image, index) => (
                   <button
                     key={index}
                     onClick={() => setCurrentImageIndex(index)}
                     className={`relative rounded-lg overflow-hidden ${
-                      index === currentImageIndex ? 'ring-2 ring-amber-600' : ''
+                      index === currentImageIndex ? "ring-2 ring-amber-600" : ""
                     }`}
                   >
                     <img
@@ -161,19 +184,27 @@ const ProductDetail = () => {
               <h1 className="font-playfair text-4xl font-bold text-amber-800 mb-4">
                 {product.name}
               </h1>
-              <p className="text-xl text-gray-600 mb-8">{product.description}</p>
-              
+              <p className="text-xl text-gray-600 mb-8">
+                {product.description}
+              </p>
+
               <div className="mb-8">
-                <h3 className="text-xl font-semibold text-amber-800 mb-4">Deskripsi Lengkap</h3>
+                <h3 className="text-xl font-semibold text-amber-800 mb-4">
+                  Deskripsi Lengkap
+                </h3>
                 <div className="text-gray-700 leading-relaxed space-y-4">
-                  {product.fullDescription.split('\n\n').map((paragraph, index) => (
-                    <p key={index}>{paragraph.trim()}</p>
-                  ))}
+                  {product.fullDescription
+                    .split("\n\n")
+                    .map((paragraph, index) => (
+                      <p key={index}>{paragraph.trim()}</p>
+                    ))}
                 </div>
               </div>
 
               <div className="bg-gray-50 p-6 rounded-xl">
-                <h3 className="text-lg font-semibold text-amber-800 mb-4">Keunggulan Produk</h3>
+                <h3 className="text-lg font-semibold text-amber-800 mb-4">
+                  Keunggulan Produk
+                </h3>
                 <ul className="space-y-2">
                   <li className="flex items-center text-gray-700">
                     <div className="w-2 h-2 bg-amber-600 rounded-full mr-3"></div>
@@ -207,14 +238,23 @@ const ProductDetail = () => {
           <div className="max-w-4xl mx-auto">
             <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-0">
-                {Object.entries(product.specifications).map(([key, value], index) => (
-                  <div key={key} className={`p-6 ${index % 2 === 0 ? 'bg-white' : 'bg-gray-50'}`}>
-                    <div className="flex justify-between items-center">
-                      <span className="font-semibold text-gray-800">{key}</span>
-                      <span className="text-gray-700">{value}</span>
+                {Object.entries(product.specifications).map(
+                  ([key, value], index) => (
+                    <div
+                      key={key}
+                      className={`p-6 ${
+                        index % 2 === 0 ? "bg-white" : "bg-gray-50"
+                      }`}
+                    >
+                      <div className="flex justify-between items-center">
+                        <span className="font-semibold text-gray-800">
+                          {key}
+                        </span>
+                        <span className="text-gray-700">{value}</span>
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  )
+                )}
               </div>
             </div>
           </div>
@@ -229,14 +269,19 @@ const ProductDetail = () => {
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {product.productionImages.map((image, index) => (
-              <div key={index} className="relative rounded-2xl overflow-hidden group">
+              <div
+                key={index}
+                className="relative rounded-2xl overflow-hidden group"
+              >
                 <img
                   src={image.url}
                   alt={image.title}
                   className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-300"
                 />
                 <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-6">
-                  <h3 className="text-white text-xl font-semibold">{image.title}</h3>
+                  <h3 className="text-white text-xl font-semibold">
+                    {image.title}
+                  </h3>
                 </div>
               </div>
             ))}
@@ -252,14 +297,19 @@ const ProductDetail = () => {
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {otherProducts.map((product) => (
-              <div key={product.id} className="bg-white rounded-2xl shadow-lg overflow-hidden group hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
+              <div
+                key={product.id}
+                className="bg-white rounded-2xl shadow-lg overflow-hidden group hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2"
+              >
                 <img
                   src={product.image}
                   alt={product.name}
                   className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-300"
                 />
                 <div className="p-6">
-                  <h3 className="font-semibold text-lg text-amber-800 mb-2">{product.name}</h3>
+                  <h3 className="font-semibold text-lg text-amber-800 mb-2">
+                    {product.name}
+                  </h3>
                   <p className="text-gray-600 mb-4">{product.description}</p>
                   <Link
                     to={`/product/${product.id}`}
@@ -285,7 +335,10 @@ const ProductDetail = () => {
               </h2>
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div>
-                  <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
+                  <label
+                    htmlFor="name"
+                    className="block text-sm font-medium text-gray-700 mb-2"
+                  >
                     Nama Lengkap *
                   </label>
                   <input
@@ -301,7 +354,10 @@ const ProductDetail = () => {
                 </div>
 
                 <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+                  <label
+                    htmlFor="email"
+                    className="block text-sm font-medium text-gray-700 mb-2"
+                  >
                     Email *
                   </label>
                   <input
@@ -317,7 +373,10 @@ const ProductDetail = () => {
                 </div>
 
                 <div>
-                  <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-2">
+                  <label
+                    htmlFor="phone"
+                    className="block text-sm font-medium text-gray-700 mb-2"
+                  >
                     Nomor WhatsApp *
                   </label>
                   <input
@@ -333,7 +392,10 @@ const ProductDetail = () => {
                 </div>
 
                 <div>
-                  <label htmlFor="quantity" className="block text-sm font-medium text-gray-700 mb-2">
+                  <label
+                    htmlFor="quantity"
+                    className="block text-sm font-medium text-gray-700 mb-2"
+                  >
                     Jumlah Pesanan
                   </label>
                   <input
@@ -348,7 +410,10 @@ const ProductDetail = () => {
                 </div>
 
                 <div>
-                  <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">
+                  <label
+                    htmlFor="message"
+                    className="block text-sm font-medium text-gray-700 mb-2"
+                  >
                     Pesan Tambahan
                   </label>
                   <textarea
@@ -376,10 +441,12 @@ const ProductDetail = () => {
               <h2 className="font-playfair text-3xl font-bold text-amber-800 mb-8">
                 Kontak Langsung
               </h2>
-              
+
               <div className="space-y-6">
                 <div className="bg-amber-50 p-6 rounded-xl">
-                  <h3 className="font-semibold text-lg text-amber-800 mb-4">Hubungi Kami Langsung</h3>
+                  <h3 className="font-semibold text-lg text-amber-800 mb-4">
+                    Hubungi Kami Langsung
+                  </h3>
                   <div className="space-y-4">
                     <div className="flex items-center space-x-4">
                       <div className="bg-amber-600 p-3 rounded-full">
@@ -390,7 +457,7 @@ const ProductDetail = () => {
                         <p className="text-gray-600">+62 812-3456-7890</p>
                       </div>
                     </div>
-                    
+
                     <div className="flex items-center space-x-4">
                       <div className="bg-amber-600 p-3 rounded-full">
                         <Mail className="h-5 w-5 text-white" />
@@ -400,21 +467,25 @@ const ProductDetail = () => {
                         <p className="text-gray-600">info@kopinusantara.com</p>
                       </div>
                     </div>
-                    
+
                     <div className="flex items-center space-x-4">
                       <div className="bg-amber-600 p-3 rounded-full">
                         <MapPin className="h-5 w-5 text-white" />
                       </div>
                       <div>
                         <p className="font-semibold text-gray-800">Alamat</p>
-                        <p className="text-gray-600">Jl. Merdeka No. 123, Yogyakarta 55161</p>
+                        <p className="text-gray-600">
+                          Jl. Merdeka No. 123, Palembang 55161
+                        </p>
                       </div>
                     </div>
                   </div>
                 </div>
 
                 <div className="bg-white border-2 border-amber-200 p-6 rounded-xl">
-                  <h3 className="font-semibold text-lg text-amber-800 mb-4">Jam Operasional</h3>
+                  <h3 className="font-semibold text-lg text-amber-800 mb-4">
+                    Jam Operasional
+                  </h3>
                   <div className="space-y-2">
                     <div className="flex justify-between">
                       <span className="font-medium">Senin - Jumat</span>
@@ -432,10 +503,13 @@ const ProductDetail = () => {
                 </div>
 
                 <div className="bg-green-50 p-6 rounded-xl border-2 border-green-200">
-                  <h3 className="font-semibold text-lg text-green-800 mb-2">Respon Cepat</h3>
+                  <h3 className="font-semibold text-lg text-green-800 mb-2">
+                    Respon Cepat
+                  </h3>
                   <p className="text-green-700">
-                    Tim customer service kami akan merespon dalam 1-2 jam pada jam kerja. 
-                    Untuk respon lebih cepat, hubungi langsung via WhatsApp.
+                    Tim customer service kami akan merespon dalam 1-2 jam pada
+                    jam kerja. Untuk respon lebih cepat, hubungi langsung via
+                    WhatsApp.
                   </p>
                 </div>
               </div>

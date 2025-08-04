@@ -366,7 +366,7 @@ const Contact = () => {
               </h3>
               <p className="text-gray-700 leading-relaxed mb-6">
                 Kami mengundang Anda untuk mengunjungi toko fisik kami di
-                Yogyakarta. Di sini Anda dapat melihat langsung proses produksi,
+                Palembang. Di sini Anda dapat melihat langsung proses produksi,
                 mencoba sample produk, dan berkonsultasi langsung dengan tim
                 ahli kami.
               </p>
