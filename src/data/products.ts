@@ -1,6 +1,14 @@
 // src/data/products.ts
 export type Bean = "robusta" | "arabica";
 export type Category = "coffee";
+import robusta1 from "../assets/products/coffee/robusta/Robusta_1.png";
+import robusta2 from "../assets/products/coffee/robusta/Robusta_2.jpeg";
+import robusta3 from "../assets/products/coffee/robusta/Robusta_3.png";
+import arabica1 from "../assets/products/coffee/arabica/Arabica_1.jpg";
+import arabica2 from "../assets/products/coffee/arabica/Arabica_2.png";
+import arabica3 from "../assets/products/coffee/arabica/Arabica_3.png";
+import petik from "../assets/gallery/production/petik.png";
+import olah from "../assets/gallery/production/olah.png";
 
 export type Product = {
   id: number;
@@ -22,16 +30,11 @@ export const products: Product[] = [
       "Robusta pilihan dari dataran tinggi Pagar Alam, berkarakter tegas dengan aroma khas pegunungan.",
     fullDescription:
       "Dari ladang kopi di dataran tinggi Pagar Alam, Sumatra Selatan, Biji Kopi Robusta Premium kami lahir dari kerja sama erat dengan para petani lokal sejak 2019. Ditanam di ketinggian 700–1200 mdpl dengan udara sejuk dan tanah vulkanik yang subur, setiap biji dipetik pada puncak kematangannya untuk menjaga cita rasa terbaik. Diproses secara natural dan honey process, kopi ini menghadirkan body yang penuh, aroma khas pegunungan, serta sentuhan manis alami yang bertahan di setiap tegukan. Pilihan tepat bagi pecinta kopi yang menginginkan rasa otentik Nusantara dengan kualitas ekspor.",
-    images: [
-      "https://images.pexels.com/photos/894695/pexels-photo-894695.jpeg",
-      "https://images.pexels.com/photos/1793037/pexels-photo-1793037.jpeg",
-      "https://images.pexels.com/photos/4226249/pexels-photo-4226249.jpeg",
-      "https://images.pexels.com/photos/1793031/pexels-photo-1793031.jpeg",
-    ],
+    images: [robusta1, robusta2, robusta3],
     category: "coffee",
     bean: "robusta",
     specifications: {
-      Asal: "Pagar Alam, Sumatra Selatan, Indonesia",
+      Asal: "Sumatra Selatan, Indonesia",
       Varietas: "Robusta Pagar Alam",
       Ketinggian: "700-1200 mdpl",
       Proses: "Natural & Honey Process",
@@ -42,12 +45,12 @@ export const products: Product[] = [
     },
     productionImages: [
       {
-        url: "https://images.pexels.com/photos/4109743/pexels-photo-4109743.jpeg",
+        url: petik,
         title: "Sortir Manual oleh Petani Lokal",
       },
       {
-        url: "https://images.pexels.com/photos/4198027/pexels-photo-4198027.jpeg",
-        title: "Pengeringan Alami di Bawah Sinar Matahari",
+        url: olah,
+        title: "Pemisahan Bahan Dasar",
       },
     ],
   },
@@ -58,14 +61,11 @@ export const products: Product[] = [
       "Arabika pilihan dari dataran tinggi Pagar Alam, beraroma floral lembut dengan cita rasa fruity yang elegan.",
     fullDescription:
       "Dari lereng sejuk Pagar Alam, Sumatra Selatan, Kopi Arabika Premium kami ditanam di ketinggian 1.200–1.600 mdpl. Udara pegunungan yang bersih dan tanah vulkanik yang subur menjadikan biji arabika ini memiliki karakter rasa kompleks: keasaman halus seperti buah beri, aroma floral yang menenangkan, dan body yang lembut. Diproses dengan metode washed untuk menghasilkan rasa bersih dan konsisten, kopi ini sangat cocok dinikmati dengan seduhan manual maupun espresso, memberikan pengalaman rasa yang elegan bagi penikmat kopi sejati.",
-    images: [
-      "https://images.pexels.com/photos/1793037/pexels-photo-1793037.jpeg",
-      "https://images.pexels.com/photos/1793031/pexels-photo-1793031.jpeg",
-    ],
+    images: [arabica1, arabica2, arabica3],
     category: "coffee",
     bean: "arabica",
     specifications: {
-      Asal: "Pagar Alam, Sumatra Selatan, Indonesia",
+      Asal: "Sumatra Selatan, Indonesia",
       Varietas: "Arabica Pagar Alam",
       Ketinggian: "1200-1600 mdpl",
       Proses: "Washed",
@@ -76,11 +76,11 @@ export const products: Product[] = [
     },
     productionImages: [
       {
-        url: "https://images.pexels.com/photos/4198027/pexels-photo-4198027.jpeg",
+        url: petik,
         title: "Pemetikan Selektif oleh Petani Lokal",
       },
       {
-        url: "https://images.pexels.com/photos/4109743/pexels-photo-4109743.jpeg",
+        url: olah,
         title: "Pengolahan Basah (Washed Process)",
       },
     ],

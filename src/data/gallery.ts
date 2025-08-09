@@ -1,5 +1,7 @@
 import { products } from "./products";
-
+import olah from "../assets/gallery/production/olah.png";
+import gudang from "../assets/gallery/facilities/gudang.png";
+import gudang2 from "../assets/gallery/facilities/gudang2.png";
 export type GalleryCategory = "production" | "products" | "team" | "facilities";
 export type MediaType = "image" | "video";
 
@@ -24,7 +26,7 @@ const dummyBase: GalleryItem[] = [
   {
     id: 101,
     type: "image",
-    url: "https://images.pexels.com/photos/4109743/pexels-photo-4109743.jpeg",
+    url: olah,
     title: "Sortir Manual",
     description: "Sortasi biji kopi untuk memastikan kualitas konsisten.",
     category: "production",
@@ -49,7 +51,15 @@ const dummyBase: GalleryItem[] = [
   {
     id: 201,
     type: "image",
-    url: "https://images.pexels.com/photos/1793031/pexels-photo-1793031.jpeg",
+    url: gudang,
+    title: "Gudang & Penyimpanan",
+    description: "Kontrol suhu & kelembaban menjaga kualitas bahan baku.",
+    category: "facilities",
+  },
+  {
+    id: 202,
+    type: "image",
+    url: gudang2,
     title: "Gudang & Penyimpanan",
     description: "Kontrol suhu & kelembaban menjaga kualitas bahan baku.",
     category: "facilities",

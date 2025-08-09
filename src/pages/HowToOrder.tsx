@@ -35,10 +35,10 @@ const HowToOrder: React.FC = () => {
       description:
         "Kontak melalui WhatsApp, form online, atau telepon untuk konsultasi dan pemesanan.",
       details: [
-        "WhatsApp: +62 812-3456-7890",
+        "WhatsApp: +62 821-3158-0596",
         "Form pemesanan di halaman detail produk",
-        "Email: info@kopinusantara.com",
-        "Telepon: (0274) 123456",
+        "Email: info@BatangHari.com",
+        "Telepon: +62 821-3158-0596",
       ],
     },
     {
