@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import {
   ArrowRight,
@@ -8,204 +8,141 @@ import {
   Users,
   ChevronLeft,
   ChevronRight,
-  User,
 } from "lucide-react";
 import { useLanguage } from "../contexts/LanguageContext";
 import Footer from "../components/Footer";
+import { galleryItems, GALLERY_CATEGORY_META } from "../data/gallery";
+import { products as allProducts } from "../data/products";
 
-const Home = () => {
+// =======================
+// File-scope constants (stabil, tidak bikin re-render)
+// =======================
+const HERO_IMAGES = [
+  {
+    url: "/assets/header1.jpg",
+    title: "Kopi Premium Indonesia",
+    color: "bg-yellow-400",
+    width: "w-24",
+  },
+  {
+    url: "/assets/header2.jpg",
+    title: "Proses Roasting Berkualitas",
+    color: "bg-green-400",
+    width: "w-16",
+  },
+  {
+    url: "/assets/header3.jpg",
+    title: "Rempah-Rempah Pilihan",
+    color: "bg-amber-500",
+    width: "w-32",
+  },
+];
+
+const Home: React.FC = () => {
   const { t } = useLanguage();
-  const [currentSlide, setCurrentSlide] = useState(0);
-  const [currentGallerySlide, setCurrentGallerySlide] = useState(0);
 
-  const heroImages = [
-    {
-      url: "/assets/header1.jpg",
-      title: "Kopi Premium Indonesia",
-      color: "bg-yellow-400",
-      width: "w-24",
-    },
-    {
-      url: "/assets/header2.jpg",
-      title: "Proses Roasting Berkualitas",
-      color: "bg-green-400",
-      width: "w-16",
-    },
-    {
-      url: "/assets/header3.jpg",
-      title: "Rempah-Rempah Pilihan",
-      color: "bg-amber-500",
-      width: "w-32",
-    },
-  ];
-
-  const galleryImages = [
-    {
-      url: "https://images.pexels.com/photos/894695/pexels-photo-894695.jpeg",
-      title: "Coffee Roasting Process",
-    },
-    {
-      url: "https://images.pexels.com/photos/4109743/pexels-photo-4109743.jpeg",
-      title: "Spice Selection",
-    },
-    {
-      url: "https://images.pexels.com/photos/1793037/pexels-photo-1793037.jpeg",
-      title: "Quality Control",
-    },
-    {
-      url: "https://images.pexels.com/photos/4226249/pexels-photo-4226249.jpeg",
-      title: "Packaging Process",
-    },
-  ];
-
-  const galleryVideos = [
-    {
-      url: "https://images.pexels.com/photos/894695/pexels-photo-894695.jpeg",
-      title: "Proses Roasting Kopi",
-      type: "video",
-    },
-    {
-      url: "https://images.pexels.com/photos/4109743/pexels-photo-4109743.jpeg",
-      title: "Seleksi Rempah Premium",
-      type: "video",
-    },
-    {
-      url: "https://images.pexels.com/photos/4226249/pexels-photo-4226249.jpeg",
-      title: "Packaging Process",
-      type: "video",
-    },
-    {
-      url: "https://images.pexels.com/photos/1793037/pexels-photo-1793037.jpeg",
-      title: "Quality Control",
-      type: "video",
-    },
-  ];
-
-  const teamMembers = [
-    {
-      name: t("home.team.owner.name"),
-      role: t("home.team.owner.role"),
-      avatar: "👨‍💼",
-      description: t("home.team.owner.description"),
-    },
-    {
-      name: t("home.team.manager.name"),
-      role: t("home.team.manager.role"),
-      avatar: "👨‍🌾",
-      description: t("home.team.manager.description"),
-    },
-    {
-      name: t("home.team.expert.name"),
-      role: t("home.team.expert.role"),
-      avatar: "👩‍🔬",
-      description: t("home.team.expert.description"),
-    },
-  ];
-
-  const bestProducts = [
-    {
-      id: 1,
-      name: "Kopi Robusta Premium",
-      description:
-        "Kopi robusta pilihan dengan citarasa kuat dan aroma yang menggugah selera",
-      image: "https://images.pexels.com/photos/894695/pexels-photo-894695.jpeg",
-    },
-    {
-      id: 2,
-      name: "Kayu Manis Ceylon",
-      description:
-        "Kayu manis Ceylon grade A dengan aroma manis alami dan kualitas export",
-      image: "https://images.pexels.com/photos/894695/pexels-photo-894695.jpeg",
-    },
-    {
-      id: 3,
-      name: "Lada Hitam Muntok",
-      description:
-        "Lada hitam asli Bangka dengan tingkat kepedasan sempurna untuk masakan",
-      image:
-        "https://images.pexels.com/photos/4198019/pexels-photo-4198019.jpeg",
-    },
-    {
-      id: 4,
-      name: "Pala Banda",
-      description:
-        "Pala asli Banda dengan aroma khas dan rasa yang autentik untuk bumbu masakan",
-      image:
-        "https://images.pexels.com/photos/4198017/pexels-photo-4198017.jpeg",
-    },
-  ];
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % heroImages.length);
+  // ======= Hero carousel =======
+  const [currentSlide, setCurrentSlide] = React.useState(0);
+  React.useEffect(() => {
+    const id = setInterval(() => {
+      setCurrentSlide((p) => (p + 1) % HERO_IMAGES.length);
     }, 4000);
-    return () => clearInterval(timer);
+    return () => clearInterval(id);
   }, []);
+  const nextHero = () => setCurrentSlide((p) => (p + 1) % HERO_IMAGES.length);
+  const prevHero = () =>
+    setCurrentSlide((p) => (p - 1 + HERO_IMAGES.length) % HERO_IMAGES.length);
 
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentGallerySlide((prev) => (prev + 1) % galleryVideos.length);
-    }, 4000);
-    return () => clearInterval(timer);
-  }, [galleryVideos.length]);
-
-  const nextSlide = () => {
-    setCurrentSlide((prev) => (prev + 1) % heroImages.length);
-  };
-
-  const prevSlide = () => {
-    setCurrentSlide(
-      (prev) => (prev - 1 + heroImages.length) % heroImages.length
+  // ======= Gallery preview (data-driven dari data/gallery.ts) =======
+  // Ambil maksimal 6 item bertipe image
+  const PREVIEW_ITEMS = React.useMemo(
+    () => galleryItems.filter((i) => i.type === "image").slice(0, 6),
+    []
+  );
+  const [currentGallery, setCurrentGallery] = React.useState(0);
+  const nextGallery = () =>
+    setCurrentGallery((p) => (p + 1) % PREVIEW_ITEMS.length);
+  const prevGallery = () =>
+    setCurrentGallery(
+      (p) => (p - 1 + PREVIEW_ITEMS.length) % PREVIEW_ITEMS.length
     );
-  };
+
+  // ======= Team (tergantung i18n) =======
+  const teamMembers = React.useMemo(
+    () => [
+      {
+        name: t("home.team.owner.name"),
+        role: t("home.team.owner.role"),
+        avatar: "👨‍💼",
+        description: t("home.team.owner.description"),
+      },
+      {
+        name: t("home.team.manager.name"),
+        role: t("home.team.manager.role"),
+        avatar: "👨‍🌾",
+        description: t("home.team.manager.description"),
+      },
+      {
+        name: t("home.team.expert.name"),
+        role: t("home.team.expert.role"),
+        avatar: "👩‍🔬",
+        description: t("home.team.expert.description"),
+      },
+    ],
+    [t]
+  );
+
+  // ======= Best products (ambil dari data pusat, hanya kopi) =======
+  const bestProducts = React.useMemo(() => {
+    return allProducts.filter((p) => p.category === "coffee").slice(0, 2);
+  }, []);
 
   return (
     <div className="min-h-screen bg-white">
-      {/* Hero Section with Animated Carousel */}
-      <section className="relative h-screen bg-white">
+      {/* HERO */}
+      <section className="relative h-[90vh] md:h-screen bg-white">
         <div className="relative h-full overflow-hidden">
-          {heroImages.map((image, index) => (
+          {HERO_IMAGES.map((image, index) => (
             <div
               key={index}
-              className={`absolute inset-0 transition-transform duration-1000 ease-in-out ${
-                index === currentSlide
-                  ? "translate-x-0"
-                  : index < currentSlide
-                  ? "-translate-x-full"
-                  : "translate-x-full"
+              className={`absolute inset-0 transition-opacity duration-700 ${
+                index === currentSlide ? "opacity-100" : "opacity-0"
               }`}
             >
               <img
                 src={image.url}
                 alt={image.title}
                 className="w-full h-full object-cover"
+                fetchpriority="high"
               />
-              <div className="absolute inset-0 bg-black opacity-40"></div>
+              <div className="absolute inset-0 bg-black/40" />
             </div>
           ))}
 
-          {/* Navigation Arrows */}
+          {/* Arrows */}
           <button
-            onClick={prevSlide}
-            className="absolute left-6 top-1/2 transform -translate-y-1/2 bg-white/20 hover:bg-white/30 text-white p-3 rounded-full transition-all duration-300 z-10"
+            onClick={prevHero}
+            aria-label="Slide sebelumnya"
+            className="absolute left-6 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/30 text-white p-3 rounded-full transition z-10"
           >
             <ChevronLeft className="h-6 w-6" />
           </button>
-
           <button
-            onClick={nextSlide}
-            className="absolute right-6 top-1/2 transform -translate-y-1/2 bg-white/20 hover:bg-white/30 text-white p-3 rounded-full transition-all duration-300 z-10"
+            onClick={nextHero}
+            aria-label="Slide berikutnya"
+            className="absolute right-6 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/30 text-white p-3 rounded-full transition z-10"
           >
             <ChevronRight className="h-6 w-6" />
           </button>
 
-          {/* Slide Indicators */}
-          <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex space-x-3 z-10">
-            {heroImages.map((_, index) => (
+          {/* Dots */}
+          <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex space-x-3 z-10">
+            {HERO_IMAGES.map((_, index) => (
               <button
                 key={index}
                 onClick={() => setCurrentSlide(index)}
-                className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                aria-label={`Slide ${index + 1}`}
+                className={`w-3 h-3 rounded-full transition ${
                   index === currentSlide ? "bg-white" : "bg-white/50"
                 }`}
               />
@@ -223,24 +160,24 @@ const Home = () => {
               </span>
             </h1>
 
-            <div className="mb-10">
+            {/* Decorative line mengikuti slide */}
+            <div className="mb-10" aria-hidden="true">
               <div
-                aria-hidden="true"
-                className={`h-[2px] rounded-full mx-0 md:mx-auto transition-all duration-700 ${heroImages[currentSlide].color} ${heroImages[currentSlide].width}`}
+                className={`h-[2px] rounded-full transition-all duration-700 ${HERO_IMAGES[currentSlide].color} ${HERO_IMAGES[currentSlide].width}`}
               />
             </div>
 
             <div className="flex flex-col sm:flex-row gap-4">
               <Link
-                to="/products"
-                className="bg-amber-600 text-white px-8 py-4 rounded-full font-semibold hover:bg-amber-700 transition-all duration-300 transform hover:scale-105 inline-flex items-center justify-center"
+                to="/products?category=coffee"
+                className="bg-amber-600 text-white px-8 py-4 rounded-full font-semibold hover:bg-amber-700 transition transform hover:scale-105 inline-flex items-center justify-center"
               >
                 {t("home.hero.viewProducts")}{" "}
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Link>
               <Link
                 to="/contact"
-                className="border-2 border-white text-white px-8 py-4 rounded-full font-semibold hover:bg-white hover:text-amber-800 transition-all duration-300 inline-flex items-center justify-center"
+                className="border-2 border-white text-white px-8 py-4 rounded-full font-semibold hover:bg-white hover:text-amber-800 transition inline-flex items-center justify-center"
               >
                 {t("home.hero.contactUs")}
               </Link>
@@ -249,7 +186,7 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Intro Section */}
+      {/* Intro */}
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 text-center">
           <h2 className="font-playfair text-4xl md:text-5xl font-bold text-amber-800 mb-6">
@@ -261,7 +198,7 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Why Choose Us */}
+      {/* Why Us */}
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4">
           <h2 className="font-playfair text-4xl md:text-5xl font-bold text-amber-800 text-center mb-16">
@@ -269,83 +206,79 @@ const Home = () => {
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             <div className="text-center group">
-              <div className="bg-amber-600 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-amber-700 transition-colors duration-300">
+              <div className="bg-amber-600 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-amber-700 transition-colors">
                 <Award className="h-10 w-10 text-white" />
               </div>
               <h3 className="font-semibold text-xl text-amber-800 mb-4">
                 {t("home.whyUs.quality.title")}
               </h3>
-              <p className="text-gray-600 leading-relaxed">
-                {t("home.whyUs.quality.desc")}
-              </p>
+              <p className="text-gray-600">{t("home.whyUs.quality.desc")}</p>
             </div>
+
             <div className="text-center group">
-              <div className="bg-amber-600 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-amber-700 transition-colors duration-300">
+              <div className="bg-amber-600 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-amber-700 transition-colors">
                 <Leaf className="h-10 w-10 text-white" />
               </div>
               <h3 className="font-semibold text-xl text-amber-800 mb-4">
                 {t("home.whyUs.natural.title")}
               </h3>
-              <p className="text-gray-600 leading-relaxed">
-                {t("home.whyUs.natural.desc")}
-              </p>
+              <p className="text-gray-600">{t("home.whyUs.natural.desc")}</p>
             </div>
+
             <div className="text-center group">
-              <div className="bg-amber-600 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-amber-700 transition-colors duration-300">
+              <div className="bg-amber-600 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-amber-700 transition-colors">
                 <Users className="h-10 w-10 text-white" />
               </div>
               <h3 className="font-semibold text-xl text-amber-800 mb-4">
                 {t("home.whyUs.trusted.title")}
               </h3>
-              <p className="text-gray-600 leading-relaxed">
-                {t("home.whyUs.trusted.desc")}
-              </p>
+              <p className="text-gray-600">{t("home.whyUs.trusted.desc")}</p>
             </div>
+
             <div className="text-center group">
-              <div className="bg-amber-600 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-amber-700 transition-colors duration-300">
+              <div className="bg-amber-600 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-amber-700 transition-colors">
                 <CheckCircle className="h-10 w-10 text-white" />
               </div>
               <h3 className="font-semibold text-xl text-amber-800 mb-4">
                 {t("home.whyUs.guarantee.title")}
               </h3>
-              <p className="text-gray-600 leading-relaxed">
-                {t("home.whyUs.guarantee.desc")}
-              </p>
+              <p className="text-gray-600">{t("home.whyUs.guarantee.desc")}</p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Best Products */}
+      {/* Best Products (kopi saja, dari data pusat) */}
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4">
           <h2 className="font-playfair text-4xl md:text-5xl font-bold text-amber-800 text-center mb-16">
             {t("home.products.title")}
           </h2>
+
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {bestProducts.map((product) => (
               <div
                 key={product.id}
-                className="bg-white rounded-2xl shadow-lg overflow-hidden group hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2"
+                className="bg-white rounded-2xl shadow-lg overflow-hidden group hover:shadow-xl transition transform hover:-translate-y-2"
               >
                 <div className="relative overflow-hidden">
                   <img
-                    src={product.image}
+                    src={product.images[0]}
                     alt={product.name}
-                    className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-300"
+                    className="w-full h-64 object-cover group-hover:scale-110 transition-transform"
+                    loading="lazy"
+                    decoding="async"
                   />
-                  <div className="absolute inset-0 bg-black opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
+                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition" />
                 </div>
                 <div className="p-6">
                   <h3 className="font-semibold text-xl text-amber-800 mb-3">
                     {product.name}
                   </h3>
-                  <p className="text-gray-600 mb-4 leading-relaxed">
-                    {product.description}
-                  </p>
+                  <p className="text-gray-600 mb-4">{product.description}</p>
                   <Link
                     to={`/product/${product.id}`}
-                    className="bg-amber-600 text-white px-6 py-2 rounded-full font-semibold hover:bg-amber-700 transition-colors duration-200 inline-flex items-center"
+                    className="bg-amber-600 text-white px-6 py-2 rounded-full font-semibold hover:bg-amber-700 transition inline-flex items-center"
                   >
                     {t("home.products.detail")}{" "}
                     <ArrowRight className="ml-2 h-4 w-4" />
@@ -354,10 +287,11 @@ const Home = () => {
               </div>
             ))}
           </div>
+
           <div className="text-center mt-12">
             <Link
-              to="/products"
-              className="bg-amber-800 text-white px-8 py-4 rounded-full font-semibold hover:bg-amber-900 transition-colors duration-200 inline-flex items-center"
+              to="/products?category=coffee"
+              className="bg-amber-800 text-white px-8 py-4 rounded-full font-semibold hover:bg-amber-900 transition inline-flex items-center"
             >
               {t("home.products.viewAll")}{" "}
               <ArrowRight className="ml-2 h-5 w-5" />
@@ -366,79 +300,95 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Gallery Section */}
+      {/* Gallery Preview (ringan, data-driven) */}
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4">
           <h2 className="font-playfair text-4xl md:text-5xl font-bold text-amber-800 text-center mb-16">
             {t("home.gallery.title")}
           </h2>
-          <div className="text-center mb-12">
-            <p className="text-xl text-gray-700 max-w-2xl mx-auto">
-              {t("home.gallery.description")}
-            </p>
-          </div>
 
-          <div className="relative max-w-5xl mx-auto">
-            <div className="relative h-80 rounded-2xl overflow-hidden">
-              <img
-                src={galleryVideos[currentGallerySlide].url}
-                alt={galleryVideos[currentGallerySlide].title}
-                className="w-full h-full object-cover"
-              />
-              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-6">
-                <h3 className="text-white text-xl font-semibold">
-                  {galleryVideos[currentGallerySlide].title}
-                </h3>
-                {galleryVideos[currentGallerySlide].type === "video" && (
-                  <span className="text-white text-sm opacity-75">
-                    🎥 Video
-                  </span>
-                )}
+          {PREVIEW_ITEMS.length === 0 ? (
+            <div className="text-center text-gray-600">
+              Belum ada konten galeri untuk ditampilkan.
+            </div>
+          ) : (
+            <div className="relative max-w-5xl mx-auto">
+              {(() => {
+                const item = PREVIEW_ITEMS[currentGallery];
+                const catLabel =
+                  GALLERY_CATEGORY_META[
+                    item.category as keyof typeof GALLERY_CATEGORY_META
+                  ]?.label ?? "Galeri";
+                return (
+                  <Link
+                    to={`/gallery?cat=${encodeURIComponent(item.category)}`}
+                    className="block group"
+                    aria-label={`Buka galeri kategori ${catLabel}`}
+                  >
+                    <div className="relative h-80 rounded-2xl overflow-hidden">
+                      <img
+                        src={item.url}
+                        alt={item.title}
+                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+                        loading="lazy"
+                        decoding="async"
+                        {...(currentGallery === 0
+                          ? { fetchpriority: "high" }
+                          : {})}
+                      />
+                      {/* Overlay gradient + title */}
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent" />
+                      <div className="absolute bottom-0 left-0 right-0 p-6">
+                        <div className="inline-flex items-center mb-2">
+                          <span className="bg-amber-600 text-white px-3 py-1 rounded-full text-xs font-semibold">
+                            {catLabel}
+                          </span>
+                        </div>
+                        <h3 className="text-white text-xl font-semibold drop-shadow">
+                          {item.title}
+                        </h3>
+                      </div>
+                    </div>
+                  </Link>
+                );
+              })()}
+
+              {/* Arrows */}
+              <button
+                onClick={prevGallery}
+                aria-label="Gambar sebelumnya"
+                className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-amber-800 p-2 rounded-full transition"
+              >
+                <ChevronLeft className="h-6 w-6" />
+              </button>
+              <button
+                onClick={nextGallery}
+                aria-label="Gambar berikutnya"
+                className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-amber-800 p-2 rounded-full transition"
+              >
+                <ChevronRight className="h-6 w-6" />
+              </button>
+
+              {/* Dots */}
+              <div className="flex justify-center mt-6 space-x-2">
+                {PREVIEW_ITEMS.map((_, index) => (
+                  <button
+                    key={index}
+                    onClick={() => setCurrentGallery(index)}
+                    aria-label={`Preview ${index + 1}`}
+                    className={`w-3 h-3 rounded-full transition ${
+                      index === currentGallery ? "bg-amber-600" : "bg-gray-300"
+                    }`}
+                  />
+                ))}
               </div>
             </div>
-
-            <button
-              onClick={() =>
-                setCurrentGallerySlide(
-                  (prev) =>
-                    (prev - 1 + galleryVideos.length) % galleryVideos.length
-                )
-              }
-              className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white/80 hover:bg-white text-amber-800 p-2 rounded-full transition-all duration-200"
-            >
-              <ChevronLeft className="h-6 w-6" />
-            </button>
-
-            <button
-              onClick={() =>
-                setCurrentGallerySlide(
-                  (prev) => (prev + 1) % galleryVideos.length
-                )
-              }
-              className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white/80 hover:bg-white text-amber-800 p-2 rounded-full transition-all duration-200"
-            >
-              <ChevronRight className="h-6 w-6" />
-            </button>
-
-            <div className="flex justify-center mt-6 space-x-2">
-              {galleryVideos.map((_, index) => (
-                <button
-                  key={index}
-                  onClick={() => setCurrentGallerySlide(index)}
-                  className={`w-3 h-3 rounded-full transition-all duration-200 ${
-                    index === currentGallerySlide
-                      ? "bg-amber-600"
-                      : "bg-gray-300"
-                  }`}
-                />
-              ))}
-            </div>
-          </div>
+          )}
 
           <div className="text-center mt-12">
             <Link
               to="/gallery"
-              className="bg-amber-600 text-white px-8 py-4 rounded-full font-semibold hover:bg-amber-700 transition-colors duration-200 inline-flex items-center"
+              className="bg-amber-600 text-white px-8 py-4 rounded-full font-semibold hover:bg-amber-700 transition inline-flex items-center"
             >
               {t("home.gallery.viewGallery")}{" "}
               <ArrowRight className="ml-2 h-5 w-5" />
@@ -447,7 +397,7 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Our Team */}
+      {/* Team */}
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4">
           <h2 className="font-playfair text-4xl md:text-5xl font-bold text-amber-800 text-center mb-16">
@@ -455,9 +405,9 @@ const Home = () => {
           </h2>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {teamMembers.map((member, index) => (
-              <div key={index} className="text-center group">
-                <div className="bg-white rounded-2xl shadow-lg p-8 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
+            {teamMembers.map((member, idx) => (
+              <div key={idx} className="text-center group">
+                <div className="bg-white rounded-2xl shadow-lg p-8 hover:shadow-xl transition transform hover:-translate-y-2">
                   <div className="text-6xl mb-6">{member.avatar}</div>
                   <h3 className="font-semibold text-xl text-amber-800 mb-2">
                     {member.name}
@@ -465,9 +415,7 @@ const Home = () => {
                   <p className="text-amber-600 font-medium mb-4">
                     {member.role}
                   </p>
-                  <p className="text-gray-600 leading-relaxed">
-                    {member.description}
-                  </p>
+                  <p className="text-gray-600">{member.description}</p>
                 </div>
               </div>
             ))}
