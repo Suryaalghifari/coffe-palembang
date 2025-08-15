@@ -1,9 +1,9 @@
+// src/pages/HowToOrder.tsx
 import React from "react";
 import {
   MessageCircle,
   ShoppingCart,
   CheckCircle,
-  Phone,
   ArrowRight,
 } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -14,61 +14,56 @@ import { products as allProducts } from "../data/products";
 const HowToOrder: React.FC = () => {
   const { t } = useLanguage();
 
-  const orderSteps = [
+  // Definisikan key untuk tiap langkah agar i18n bisa fleksibel
+  const stepKeySets = [
     {
-      step: 1,
       icon: ShoppingCart,
-      title: "Pilih Produk",
-      description:
-        'Jelajahi koleksi kopi premium kami. Klik "Detail Produk" untuk informasi lengkap.',
-      details: [
-        "Lihat katalog produk di halaman Products",
-        "Baca spesifikasi dan deskripsi produk",
-        "Lihat galeri foto produk",
-        "Cek ketersediaan stok",
+      titleKey: "howToOrder.steps.0.title",
+      descKey: "howToOrder.steps.0.description",
+      detailKeys: [
+        "howToOrder.steps.0.details.0",
+        "howToOrder.steps.0.details.1",
+        "howToOrder.steps.0.details.2",
+        "howToOrder.steps.0.details.3",
       ],
     },
     {
-      step: 2,
       icon: MessageCircle,
-      title: "Konsultasi & Pemesanan",
-      description:
-        "Kontak melalui WhatsApp, form online, atau telepon untuk konsultasi dan pemesanan.",
-      details: [
-        "WhatsApp: +62 821-3158-0596",
-        "Form pemesanan di halaman detail produk",
-        "Email: info@BatangHari.com",
-        "Telepon: +62 821-3158-0596",
+      titleKey: "howToOrder.steps.1.title",
+      descKey: "howToOrder.steps.1.description",
+      detailKeys: [
+        "howToOrder.steps.1.details.0",
+        "howToOrder.steps.1.details.1",
+        "howToOrder.steps.1.details.2",
+        "howToOrder.steps.1.details.3",
       ],
     },
     {
-      step: 3,
       icon: CheckCircle,
-      title: "Konfirmasi & Pembayaran",
-      description:
-        "Tim kami akan mengonfirmasi pesanan dan memandu proses pembayaran yang mudah.",
-      details: [
-        "Konfirmasi jenis dan jumlah produk",
-        "Informasi metode pembayaran",
-        "Konfirmasi alamat pengiriman",
-        "Estimasi waktu proses dan kirim",
+      titleKey: "howToOrder.steps.2.title",
+      descKey: "howToOrder.steps.2.description",
+      detailKeys: [
+        "howToOrder.steps.2.details.0",
+        "howToOrder.steps.2.details.1",
+        "howToOrder.steps.2.details.2",
+        "howToOrder.steps.2.details.3",
       ],
     },
   ];
 
-  // Ambil produk dari sumber data pusat → hanya kategori coffee
+  // Ambil produk kopi dari data pusat & terjemahkan nama/desc via i18n
   const productGallery = React.useMemo(
     () =>
       allProducts
         .filter((p) => p.category === "coffee")
-        .slice(0, 6) // tampilkan maksimal 6 item
+        .slice(0, 6)
         .map((p) => ({
           id: p.id,
-          name: p.name,
-          description: p.description,
+          name: t(p.nameKey),
+          description: t(p.descKey),
           image: p.images?.[0],
         })),
-    []
+    [t]
   );
 
   return (
@@ -77,11 +72,10 @@ const HowToOrder: React.FC = () => {
       <section className="bg-white py-20">
         <div className="max-w-7xl mx-auto px-4 text-center">
           <h1 className="font-playfair text-4xl md:text-6xl font-bold text-amber-800 mb-6">
-            {t("nav.howToOrder")}
+            {t("howToOrder.hero.title")}
           </h1>
           <p className="text-xl text-gray-700 max-w-3xl mx-auto leading-relaxed">
-            Proses pemesanan yang mudah dan transparan. Ikuti 3 langkah
-            sederhana untuk mendapatkan kopi premium kami.
+            {t("howToOrder.hero.subtitle")}
           </p>
         </div>
       </section>
@@ -90,49 +84,50 @@ const HowToOrder: React.FC = () => {
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-4">
           <h2 className="font-playfair text-3xl md:text-4xl font-bold text-amber-800 text-center mb-16">
-            3 Langkah Mudah Pemesanan
+            {t("howToOrder.stepsTitle")}
           </h2>
 
           <div className="space-y-16">
-            {orderSteps.map((step, index) => (
-              <div
-                key={step.step}
-                className={`flex flex-col lg:flex-row items-center gap-12 ${
-                  index % 2 === 1 ? "lg:flex-row-reverse" : ""
-                }`}
-              >
-                <div className="flex-1">
-                  <div className="flex items-center mb-6">
-                    <div className="bg-amber-600 text-white w-16 h-16 rounded-full flex items-center justify-center text-2xl font-bold mr-4">
-                      {step.step}
+            {stepKeySets.map((s, index) => {
+              const Icon = s.icon;
+              return (
+                <div
+                  key={index}
+                  className={`flex flex-col lg:flex-row items-center gap-12 ${
+                    index % 2 === 1 ? "lg:flex-row-reverse" : ""
+                  }`}
+                >
+                  <div className="flex-1">
+                    <div className="flex items-center mb-6">
+                      <div className="bg-amber-600 text-white w-16 h-16 rounded-full flex items-center justify-center text-2xl font-bold mr-4">
+                        {index + 1}
+                      </div>
+                      <div>
+                        <h3 className="text-2xl font-bold text-amber-800">
+                          {t(s.titleKey)}
+                        </h3>
+                        <p className="text-gray-600 text-lg">{t(s.descKey)}</p>
+                      </div>
                     </div>
-                    <div>
-                      <h3 className="text-2xl font-bold text-amber-800">
-                        {step.title}
-                      </h3>
-                      <p className="text-gray-600 text-lg">
-                        {step.description}
-                      </p>
-                    </div>
+
+                    <ul className="space-y-3">
+                      {s.detailKeys.map((k) => (
+                        <li key={k} className="flex items-center text-gray-700">
+                          <div className="w-2 h-2 bg-amber-600 rounded-full mr-3" />
+                          {t(k)}
+                        </li>
+                      ))}
+                    </ul>
                   </div>
 
-                  <ul className="space-y-3">
-                    {step.details.map((detail, idx) => (
-                      <li key={idx} className="flex items-center text-gray-700">
-                        <div className="w-2 h-2 bg-amber-600 rounded-full mr-3" />
-                        {detail}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                <div className="flex-1 flex justify-center">
-                  <div className="bg-amber-50 p-12 rounded-2xl">
-                    <step.icon className="h-32 w-32 text-amber-600 mx-auto" />
+                  <div className="flex-1 flex justify-center">
+                    <div className="bg-amber-50 p-12 rounded-2xl">
+                      <Icon className="h-32 w-32 text-amber-600 mx-auto" />
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>
@@ -141,7 +136,7 @@ const HowToOrder: React.FC = () => {
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-4">
           <h2 className="font-playfair text-3xl md:text-4xl font-bold text-amber-800 text-center mb-16">
-            Galeri Produk Kami
+            {t("howToOrder.productGalleryTitle")}
           </h2>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -171,9 +166,12 @@ const HowToOrder: React.FC = () => {
                   <Link
                     to={`/product/${product.id}`}
                     className="text-amber-600 font-semibold hover:text-amber-700 transition-colors duration-200 inline-flex items-center"
-                    aria-label={`Lihat detail ${product.name}`}
+                    aria-label={t("howToOrder.viewDetailAria", {
+                      name: product.name,
+                    })}
                   >
-                    Lihat Detail <ArrowRight className="ml-1 h-4 w-4" />
+                    {t("productsPage.detailCta")}{" "}
+                    <ArrowRight className="ml-1 h-4 w-4" />
                   </Link>
                 </div>
               </div>
@@ -185,7 +183,8 @@ const HowToOrder: React.FC = () => {
               to="/products?category=coffee"
               className="bg-amber-600 text-white px-8 py-4 rounded-full font-semibold hover:bg-amber-700 transition-colors duration-200 inline-flex items-center"
             >
-              Lihat Semua Produk <ArrowRight className="ml-2 h-5 w-5" />
+              {t("howToOrder.seeAllProducts")}{" "}
+              <ArrowRight className="ml-2 h-5 w-5" />
             </Link>
           </div>
         </div>
@@ -195,49 +194,18 @@ const HowToOrder: React.FC = () => {
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4">
           <h2 className="font-playfair text-3xl md:text-4xl font-bold text-amber-800 text-center mb-16">
-            Pertanyaan Umum
+            {t("howToOrder.faqTitle")}
           </h2>
 
           <div className="max-w-4xl mx-auto space-y-6">
-            <div className="bg-white rounded-2xl shadow-md p-8">
-              <h3 className="text-xl font-bold text-amber-800 mb-4">
-                Berapa minimal order?
-              </h3>
-              <p className="text-gray-700">
-                Tidak ada minimal order. Anda bisa memesan mulai dari 1 pack
-                untuk mencoba kualitas kami.
-              </p>
-            </div>
-
-            <div className="bg-white rounded-2xl shadow-md p-8">
-              <h3 className="text-xl font-bold text-amber-800 mb-4">
-                Bagaimana cara pembayaran?
-              </h3>
-              <p className="text-gray-700">
-                Kami menerima transfer bank, e-wallet (GoPay, OVO, DANA), dan
-                COD area Palembang.
-              </p>
-            </div>
-
-            <div className="bg-white rounded-2xl shadow-md p-8">
-              <h3 className="text-xl font-bold text-amber-800 mb-4">
-                Bagaimana jika produk tidak sesuai?
-              </h3>
-              <p className="text-gray-700">
-                Garansi 100% uang kembali jika produk tidak sesuai atau rusak
-                saat diterima.
-              </p>
-            </div>
-
-            <div className="bg-white rounded-2xl shadow-md p-8">
-              <h3 className="text-xl font-bold text-amber-800 mb-4">
-                Berapa lama pengiriman?
-              </h3>
-              <p className="text-gray-700">
-                Estimasi 2–5 hari kerja tergantung lokasi. Area Palembang bisa
-                same-day delivery.
-              </p>
-            </div>
+            {[0, 1, 2, 3].map((i) => (
+              <div key={i} className="bg-white rounded-2xl shadow-md p-8">
+                <h3 className="text-xl font-bold text-amber-800 mb-4">
+                  {t(`howToOrder.faq.${i}.q`)}
+                </h3>
+                <p className="text-gray-700">{t(`howToOrder.faq.${i}.a`)}</p>
+              </div>
+            ))}
           </div>
         </div>
       </section>

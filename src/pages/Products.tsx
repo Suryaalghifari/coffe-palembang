@@ -1,33 +1,41 @@
+// src/pages/Products.tsx
 import React from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import { ArrowRight, Search } from "lucide-react";
 import Footer from "../components/Footer";
 import { products as allProducts } from "../data/products";
+import { useLanguage } from "../contexts/LanguageContext";
 
-const Products = () => {
+const Products: React.FC = () => {
+  const { t } = useLanguage();
   const [params, setParams] = useSearchParams();
   const category = params.get("category") ?? "coffee"; // force coffee
   const bean = params.get("bean"); // "robusta" | "arabica" | null
   const [searchTerm, setSearchTerm] = React.useState("");
 
-  // Validasi kategori: sementara hanya coffee
+  // Pastikan category=coffee
   React.useEffect(() => {
     if (category !== "coffee") {
-      params.set("category", "coffee");
-      setParams(params, { replace: true });
+      const next = new URLSearchParams(params);
+      next.set("category", "coffee");
+      setParams(next, { replace: true });
     }
   }, [category, params, setParams]);
 
   const filters = [
-    { id: "all", label: "Semua Produk", to: "/products?category=coffee" },
+    {
+      id: "all",
+      label: t("products.categories.all"),
+      to: "/products?category=coffee",
+    },
     {
       id: "robusta",
-      label: "Robusta",
+      label: t("products.categories.robusta"),
       to: "/products?category=coffee&bean=robusta",
     },
     {
       id: "arabica",
-      label: "Arabica",
+      label: t("products.categories.arabica"),
       to: "/products?category=coffee&bean=arabica",
     },
   ];
@@ -36,11 +44,11 @@ const Products = () => {
     .filter((p) => p.category === "coffee")
     .filter((p) => (bean ? p.bean === bean : true))
     .filter((p) => {
-      const q = searchTerm.toLowerCase();
-      return (
-        p.name.toLowerCase().includes(q) ||
-        p.description.toLowerCase().includes(q)
-      );
+      const q = searchTerm.trim().toLowerCase();
+      if (!q) return true;
+      const name = t(p.nameKey).toLowerCase();
+      const desc = t(p.descKey).toLowerCase();
+      return name.includes(q) || desc.includes(q);
     });
 
   return (
@@ -49,10 +57,10 @@ const Products = () => {
       <section className="bg-white py-20">
         <div className="max-w-7xl mx-auto px-4 text-center">
           <h1 className="font-playfair text-4xl md:text-6xl font-bold text-amber-800 mb-6">
-            Produk Kopi Kami
+            {t("productsPage.title")}
           </h1>
           <p className="text-xl text-gray-700 max-w-3xl mx-auto leading-relaxed">
-            Pilih Robusta atau Arabica—semuanya premium dari Indonesia.
+            {t("productsPage.subtitle")}
           </p>
         </div>
       </section>
@@ -65,7 +73,7 @@ const Products = () => {
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 h-5 w-5" />
               <input
                 type="text"
-                placeholder="Cari produk..."
+                placeholder={t("productsPage.searchPlaceholder")}
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-full focus:ring-2 focus:ring-amber-500 focus:border-transparent"
@@ -106,23 +114,26 @@ const Products = () => {
                 <div className="relative overflow-hidden">
                   <img
                     src={product.images[0]}
-                    alt={product.name}
+                    alt={t(product.nameKey)}
                     className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-300"
+                    loading="lazy"
+                    decoding="async"
                   />
                   <div className="absolute inset-0 bg-black opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
                 </div>
                 <div className="p-6">
                   <h3 className="font-semibold text-xl text-amber-800 mb-3">
-                    {product.name}
+                    {t(product.nameKey)}
                   </h3>
                   <p className="text-gray-600 mb-6 leading-relaxed text-sm">
-                    {product.description}
+                    {t(product.descKey)}
                   </p>
                   <Link
                     to={`/product/${product.id}`}
                     className="w-full bg-amber-600 text-white px-6 py-3 rounded-full font-semibold hover:bg-amber-700 transition-colors duration-200 inline-flex items-center justify-center"
                   >
-                    Detail Produk <ArrowRight className="ml-2 h-4 w-4" />
+                    {t("productsPage.detailCta")}{" "}
+                    <ArrowRight className="ml-2 h-4 w-4" />
                   </Link>
                 </div>
               </div>
@@ -132,9 +143,9 @@ const Products = () => {
           {filteredProducts.length === 0 && (
             <div className="text-center py-12">
               <p className="text-xl text-gray-600 mb-4">
-                Produk tidak ditemukan
+                {t("productsPage.notFoundTitle")}
               </p>
-              <p className="text-gray-500">Coba ubah kata kunci atau filter</p>
+              <p className="text-gray-500">{t("productsPage.notFoundHint")}</p>
             </div>
           )}
         </div>
@@ -144,16 +155,17 @@ const Products = () => {
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 text-center">
           <h2 className="font-playfair text-3xl md:text-4xl font-bold text-amber-800 mb-6">
-            Tidak Menemukan Yang Anda Cari?
+            {t("productsPage.ctaTitle")}
           </h2>
           <p className="text-xl text-gray-700 mb-8 max-w-2xl mx-auto">
-            Hubungi kami untuk permintaan khusus atau jumlah besar.
+            {t("productsPage.ctaSubtitle")}
           </p>
           <Link
             to="/contact"
             className="bg-amber-600 text-white px-8 py-4 rounded-full font-semibold hover:bg-amber-700 transition-colors duration-200 inline-flex items-center"
           >
-            Hubungi Kami <ArrowRight className="ml-2 h-5 w-5" />
+            {t("productsPage.ctaButton")}{" "}
+            <ArrowRight className="ml-2 h-5 w-5" />
           </Link>
         </div>
       </section>

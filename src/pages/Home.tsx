@@ -1,3 +1,4 @@
+// src/pages/Home.tsx
 import React from "react";
 import { Link } from "react-router-dom";
 import {
@@ -11,28 +12,25 @@ import {
 } from "lucide-react";
 import { useLanguage } from "../contexts/LanguageContext";
 import Footer from "../components/Footer";
-import { galleryItems, GALLERY_CATEGORY_META } from "../data/gallery";
-import { products as allProducts } from "../data/products";
+import { galleryItems, GALLERY_CATEGORY_KEYS } from "../data/gallery";
+import { getCoffeeProducts } from "../data/products";
 
-// =======================
-// File-scope constants (stabil, tidak bikin re-render)
-// =======================
 const HERO_IMAGES = [
   {
     url: "/assets/header1.jpg",
-    title: "Kopi Premium Indonesia",
+    i18nKey: "home.hero.slide1.title",
     color: "bg-yellow-400",
     width: "w-24",
   },
   {
     url: "/assets/header2.jpg",
-    title: "Proses Roasting Berkualitas",
+    i18nKey: "home.hero.slide2.title",
     color: "bg-green-400",
     width: "w-16",
   },
   {
     url: "/assets/header3.jpg",
-    title: "Rempah-Rempah Pilihan",
+    i18nKey: "home.hero.slide3.title",
     color: "bg-amber-500",
     width: "w-32",
   },
@@ -49,12 +47,12 @@ const Home: React.FC = () => {
     }, 4000);
     return () => clearInterval(id);
   }, []);
+
   const nextHero = () => setCurrentSlide((p) => (p + 1) % HERO_IMAGES.length);
   const prevHero = () =>
     setCurrentSlide((p) => (p - 1 + HERO_IMAGES.length) % HERO_IMAGES.length);
 
-  // ======= Gallery preview (data-driven dari data/gallery.ts) =======
-  // Ambil maksimal 6 item bertipe image
+  // ======= Gallery preview (6 image max) =======
   const PREVIEW_ITEMS = React.useMemo(
     () => galleryItems.filter((i) => i.type === "image").slice(0, 6),
     []
@@ -67,7 +65,7 @@ const Home: React.FC = () => {
       (p) => (p - 1 + PREVIEW_ITEMS.length) % PREVIEW_ITEMS.length
     );
 
-  // ======= Team (tergantung i18n) =======
+  // ======= Team (i18n-driven) =======
   const teamMembers = React.useMemo(
     () => [
       {
@@ -92,9 +90,9 @@ const Home: React.FC = () => {
     [t]
   );
 
-  // ======= Best products (ambil dari data pusat, hanya kopi) =======
+  // ======= Best products (kopi, 2 item) =======
   const bestProducts = React.useMemo(() => {
-    return allProducts.filter((p) => p.category === "coffee").slice(0, 2);
+    return getCoffeeProducts().slice(0, 2);
   }, []);
 
   return (
@@ -104,14 +102,14 @@ const Home: React.FC = () => {
         <div className="relative h-full overflow-hidden">
           {HERO_IMAGES.map((image, index) => (
             <div
-              key={index}
+              key={image.url}
               className={`absolute inset-0 transition-opacity duration-700 ${
                 index === currentSlide ? "opacity-100" : "opacity-0"
               }`}
             >
               <img
                 src={image.url}
-                alt={image.title}
+                alt={t(image.i18nKey)}
                 className="w-full h-full object-cover"
                 fetchpriority="high"
               />
@@ -122,14 +120,14 @@ const Home: React.FC = () => {
           {/* Arrows */}
           <button
             onClick={prevHero}
-            aria-label="Slide sebelumnya"
+            aria-label={t("home.hero.prev")}
             className="absolute left-6 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/30 text-white p-3 rounded-full transition z-10"
           >
             <ChevronLeft className="h-6 w-6" />
           </button>
           <button
             onClick={nextHero}
-            aria-label="Slide berikutnya"
+            aria-label={t("home.hero.next")}
             className="absolute right-6 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/30 text-white p-3 rounded-full transition z-10"
           >
             <ChevronRight className="h-6 w-6" />
@@ -248,7 +246,7 @@ const Home: React.FC = () => {
         </div>
       </section>
 
-      {/* Best Products (kopi saja, dari data pusat) */}
+      {/* Best Products (kopi, dari data pusat) */}
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4">
           <h2 className="font-playfair text-4xl md:text-5xl font-bold text-amber-800 text-center mb-16">
@@ -264,7 +262,7 @@ const Home: React.FC = () => {
                 <div className="relative overflow-hidden">
                   <img
                     src={product.images[0]}
-                    alt={product.name}
+                    alt={t(product.nameKey)}
                     className="w-full h-64 object-cover group-hover:scale-110 transition-transform"
                     loading="lazy"
                     decoding="async"
@@ -273,9 +271,9 @@ const Home: React.FC = () => {
                 </div>
                 <div className="p-6">
                   <h3 className="font-semibold text-xl text-amber-800 mb-3">
-                    {product.name}
+                    {t(product.nameKey)}
                   </h3>
-                  <p className="text-gray-600 mb-4">{product.description}</p>
+                  <p className="text-gray-600 mb-4">{t(product.descKey)}</p>
                   <Link
                     to={`/product/${product.id}`}
                     className="bg-amber-600 text-white px-6 py-2 rounded-full font-semibold hover:bg-amber-700 transition inline-flex items-center"
@@ -300,7 +298,7 @@ const Home: React.FC = () => {
         </div>
       </section>
 
-      {/* Gallery Preview (ringan, data-driven) */}
+      {/* Gallery Preview */}
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4">
           <h2 className="font-playfair text-4xl md:text-5xl font-bold text-amber-800 text-center mb-16">
@@ -309,21 +307,20 @@ const Home: React.FC = () => {
 
           {PREVIEW_ITEMS.length === 0 ? (
             <div className="text-center text-gray-600">
-              Belum ada konten galeri untuk ditampilkan.
+              {t("home.gallery.empty")}
             </div>
           ) : (
             <div className="relative max-w-5xl mx-auto">
               {(() => {
                 const item = PREVIEW_ITEMS[currentGallery];
-                const catLabel =
-                  GALLERY_CATEGORY_META[
-                    item.category as keyof typeof GALLERY_CATEGORY_META
-                  ]?.label ?? "Galeri";
+                const catLabel = t(GALLERY_CATEGORY_KEYS[item.category]);
                 return (
                   <Link
                     to={`/gallery?cat=${encodeURIComponent(item.category)}`}
                     className="block group"
-                    aria-label={`Buka galeri kategori ${catLabel}`}
+                    aria-label={t("home.gallery.openCategory", {
+                      category: catLabel,
+                    })}
                   >
                     <div className="relative h-80 rounded-2xl overflow-hidden">
                       <img
@@ -336,7 +333,6 @@ const Home: React.FC = () => {
                           ? { fetchpriority: "high" }
                           : {})}
                       />
-                      {/* Overlay gradient + title */}
                       <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent" />
                       <div className="absolute bottom-0 left-0 right-0 p-6">
                         <div className="inline-flex items-center mb-2">

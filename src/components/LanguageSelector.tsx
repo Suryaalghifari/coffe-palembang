@@ -1,52 +1,48 @@
-import React, { useState } from "react";
+import React from "react";
 import { Globe, ChevronDown } from "lucide-react";
 import { useLanguage } from "../contexts/LanguageContext";
 
-const LanguageSelector = () => {
+const LanguageSelector: React.FC = () => {
   const { language, setLanguage } = useLanguage();
-  const [isOpen, setIsOpen] = useState(false);
+  const [open, setOpen] = React.useState(false);
 
   const languages = [
-    { code: "id", name: "Bahasa Indonesia", flag: "🇮🇩" },
-    { code: "en", name: "English", flag: "🇺🇸" },
-    { code: "fr", name: "Français", flag: "🇫🇷" },
-    { code: "ar", name: "العربية", flag: "🇸🇦" },
+    { code: "id" as const, name: "Bahasa Indonesia", flag: "🇮🇩" },
+    { code: "en" as const, name: "English", flag: "🇺🇸" },
   ];
 
-  const currentLanguage = languages.find((lang) => lang.code === language);
+  const current = languages.find((l) => l.code === language)!;
 
   return (
     <div className="relative">
       <button
-        onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center space-x-2 px-3 py-2 text-gray-700 hover:text-amber-800 transition-colors duration-200"
+        onClick={() => setOpen((v) => !v)}
+        className="flex items-center gap-2 px-3 py-2 text-gray-700 hover:text-amber-800"
       >
         <Globe className="h-4 w-4" />
-        <span className="text-sm">{currentLanguage?.flag}</span>
+        <span className="text-sm">{current.flag}</span>
         <ChevronDown
-          className={`h-4 w-4 transition-transform duration-200 ${
-            isOpen ? "rotate-180" : ""
-          }`}
+          className={`h-4 w-4 transition ${open ? "rotate-180" : ""}`}
         />
       </button>
 
-      {isOpen && (
-        <div className="absolute top-full right-0 mt-1 w-48 bg-white rounded-lg shadow-lg border border-gray-200 py-2 z-50">
-          {languages.map((lang) => (
+      {open && (
+        <div className="absolute top-full right-0 mt-1 w-44 bg-white rounded-lg shadow-lg border border-gray-200 py-2 z-50">
+          {languages.map((l) => (
             <button
-              key={lang.code}
+              key={l.code}
               onClick={() => {
-                setLanguage(lang.code as any);
-                setIsOpen(false);
+                setLanguage(l.code);
+                setOpen(false);
               }}
-              className={`w-full text-left px-4 py-2 text-sm hover:bg-amber-50 hover:text-amber-800 transition-colors duration-200 flex items-center space-x-3 ${
-                language === lang.code
+              className={`w-full text-left px-4 py-2 text-sm flex items-center gap-2 hover:bg-amber-50 hover:text-amber-800 ${
+                l.code === language
                   ? "bg-amber-50 text-amber-800"
                   : "text-gray-700"
               }`}
             >
-              <span>{lang.flag}</span>
-              <span>{lang.name}</span>
+              <span>{l.flag}</span>
+              <span>{l.name}</span>
             </button>
           ))}
         </div>

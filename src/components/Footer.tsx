@@ -1,13 +1,15 @@
 import React from "react";
-import { Coffee, Mail, Phone, MapPin, Instagram, Facebook } from "lucide-react";
+import { Mail, Phone, MapPin, Instagram, Facebook } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useLanguage } from "../contexts/LanguageContext";
 
 const Footer = () => {
+  const { t } = useLanguage();
+
   return (
     <footer className="bg-white border-t border-gray-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-          {/* Company Info */}
           {/* Company Info */}
           <div className="col-span-1 md:col-span-2">
             <div className="flex items-center space-x-4 mb-4">
@@ -22,21 +24,21 @@ const Footer = () => {
             </div>
 
             <p className="text-gray-600 mb-4 leading-relaxed">
-              Dari Pagar Alam, kami hadir bersama para petani untuk menghadirkan
-              kopi dan rempah terbaik Nusantara. Mengusung kualitas unggul dan
-              rasa otentik Indonesia sejak 2019.
+              {t("footer.companyDesc")}
             </p>
 
             <div className="flex space-x-4">
               <a
                 href="#"
                 className="text-amber-600 hover:text-amber-800 transition-colors"
+                aria-label="Instagram"
               >
                 <Instagram className="h-5 w-5" />
               </a>
               <a
                 href="#"
                 className="text-amber-600 hover:text-amber-800 transition-colors"
+                aria-label="Facebook"
               >
                 <Facebook className="h-5 w-5" />
               </a>
@@ -46,7 +48,7 @@ const Footer = () => {
           {/* Quick Links */}
           <div>
             <h3 className="font-semibold text-lg mb-4 text-amber-800">
-              Quick Links
+              {t("footer.quickLinks")}
             </h3>
             <ul className="space-y-2">
               <li>
@@ -54,7 +56,7 @@ const Footer = () => {
                   to="/"
                   className="text-gray-600 hover:text-amber-800 transition-colors"
                 >
-                  Home
+                  {t("nav.home")}
                 </Link>
               </li>
               <li>
@@ -62,7 +64,7 @@ const Footer = () => {
                   to="/products"
                   className="text-gray-600 hover:text-amber-800 transition-colors"
                 >
-                  Products
+                  {t("nav.products")}
                 </Link>
               </li>
               <li>
@@ -70,7 +72,7 @@ const Footer = () => {
                   to="/how-to-order"
                   className="text-gray-600 hover:text-amber-800 transition-colors"
                 >
-                  How to Order
+                  {t("nav.howToOrder")}
                 </Link>
               </li>
               <li>
@@ -78,7 +80,7 @@ const Footer = () => {
                   to="/gallery"
                   className="text-gray-600 hover:text-amber-800 transition-colors"
                 >
-                  Gallery
+                  {t("nav.gallery")}
                 </Link>
               </li>
               <li>
@@ -86,7 +88,7 @@ const Footer = () => {
                   to="/contact"
                   className="text-gray-600 hover:text-amber-800 transition-colors"
                 >
-                  Contact
+                  {t("nav.contact")}
                 </Link>
               </li>
             </ul>
@@ -95,7 +97,7 @@ const Footer = () => {
           {/* Contact Info */}
           <div>
             <h3 className="font-semibold text-lg mb-4 text-amber-800">
-              Contact Us
+              {t("footer.contactUs")}
             </h3>
             <div className="space-y-3">
               <div className="flex items-center space-x-2">
@@ -107,12 +109,12 @@ const Footer = () => {
               </div>
               <div className="flex items-center space-x-2">
                 <Phone className="h-4 w-4 text-amber-600" />
-                <span className="text-gray-600 text-sm">+62 821-3158-0596</span>
+                <span className="text-gray-600 text-sm">+62-811-294-646</span>
               </div>
               <div className="flex items-center space-x-2">
                 <Mail className="h-4 w-4 text-amber-600" />
                 <span className="text-gray-600 text-sm">
-                  info@BatangHari.com
+                  cvbatangharisembilanmakmur@gmail.com
                 </span>
               </div>
             </div>
@@ -121,7 +123,7 @@ const Footer = () => {
 
         <div className="border-t border-gray-200 mt-8 pt-8 text-center">
           <p className="text-gray-500 text-sm">
-            © 2025 - Cv BatangHari Sembilan Makmur
+            {t("footer.rights", { year: new Date().getFullYear() })}
           </p>
         </div>
       </div>

@@ -1,28 +1,34 @@
+// src/pages/Gallery.tsx
 import React, { useMemo, useState } from "react";
-import { X, Play } from "lucide-react";
+import { X } from "lucide-react";
 import Footer from "../components/Footer";
 import { useSearchParams } from "react-router-dom";
+import { useLanguage } from "../contexts/LanguageContext";
 import {
   galleryItems,
-  GALLERY_CATEGORY_META,
-  GalleryCategory,
+  GALLERY_CATEGORY_KEYS,
+  type GalleryCategory,
 } from "../data/gallery";
 
 const ALL = "all" as const;
 
 const Gallery: React.FC = () => {
+  const { t } = useLanguage();
   const [params, setParams] = useSearchParams();
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
-  // Ambil kategori dari URL (?cat=...), default "all"
   const currentCategory = (params.get("cat") ?? ALL) as
     | typeof ALL
     | GalleryCategory;
 
-  // Turunkan kategori dari data + label meta; sembunyikan kategori yang kosong
+  const imagesOnly = useMemo(
+    () => galleryItems.filter((it) => it.type === "image"),
+    []
+  );
+
   const categories = useMemo(() => {
     const present = new Set<GalleryCategory>();
-    for (const it of galleryItems) present.add(it.category);
+    for (const it of imagesOnly) present.add(it.category);
 
     const ordered: GalleryCategory[] = [
       "production",
@@ -30,27 +36,40 @@ const Gallery: React.FC = () => {
       "team",
       "facilities",
     ];
-    const list = [{ id: ALL, name: "Semua" } as const];
+
+    const list: Array<{ id: typeof ALL | GalleryCategory; name: string }> = [
+      { id: ALL, name: t("common.all") },
+    ];
+
     ordered.forEach((id) => {
       if (present.has(id)) {
-        list.push({ id, name: GALLERY_CATEGORY_META[id].label as string });
+        list.push({ id, name: t(GALLERY_CATEGORY_KEYS[id]) });
       }
     });
+
     return list;
-  }, []);
+  }, [imagesOnly, t]);
 
   const filteredItems = useMemo(() => {
-    if (currentCategory === ALL) return galleryItems;
-    return galleryItems.filter((i) => i.category === currentCategory);
-  }, [currentCategory]);
+    if (currentCategory === ALL) return imagesOnly;
+    return imagesOnly.filter((i) => i.category === currentCategory);
+  }, [currentCategory, imagesOnly]);
 
   const openModal = (imageUrl: string) => {
     setSelectedImage(imageUrl);
     document.body.style.overflow = "hidden";
   };
+
   const closeModal = () => {
     setSelectedImage(null);
     document.body.style.overflow = "unset";
+  };
+
+  const setCategory = (id: typeof ALL | GalleryCategory) => {
+    const next = new URLSearchParams(params);
+    if (id === ALL) next.delete("cat");
+    else next.set("cat", id);
+    setParams(next, { replace: true });
   };
 
   return (
@@ -59,10 +78,10 @@ const Gallery: React.FC = () => {
       <section className="bg-white py-20">
         <div className="max-w-7xl mx-auto px-4 text-center">
           <h1 className="font-playfair text-4xl md:text-6xl font-bold text-amber-800 mb-6">
-            Galeri Kami
+            {t("gallery.title")}
           </h1>
           <p className="text-xl text-gray-700 max-w-3xl mx-auto leading-relaxed">
-            Dokumentasi produksi, produk, tim, dan fasilitas kami.
+            {t("gallery.subtitle")}
           </p>
         </div>
       </section>
@@ -76,15 +95,7 @@ const Gallery: React.FC = () => {
               return (
                 <button
                   key={cat.id}
-                  onClick={() => {
-                    if (cat.id === ALL) {
-                      params.delete("cat");
-                      setParams(params, { replace: true });
-                    } else {
-                      params.set("cat", String(cat.id));
-                      setParams(params, { replace: true });
-                    }
-                  }}
+                  onClick={() => setCategory(cat.id)}
                   className={`px-6 py-3 rounded-full font-medium transition-all duration-300 ${
                     active
                       ? "bg-amber-600 text-white shadow-lg transform scale-105"
@@ -112,35 +123,28 @@ const Gallery: React.FC = () => {
                 <div className="relative overflow-hidden">
                   <img
                     src={item.url}
-                    alt={item.title}
+                    alt={t(item.titleKey)}
                     className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-300"
                     loading="lazy"
                     decoding="async"
                   />
 
-                  {item.type === "video" && (
-                    <div className="absolute inset-0 bg-black/30 flex items-center justify-center">
-                      <div className="bg-white/90 rounded-full p-4 group-hover:bg-white transition">
-                        <Play className="h-8 w-8 text-amber-600" />
-                      </div>
-                    </div>
-                  )}
-
                   <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-opacity duration-300" />
 
                   <div className="absolute top-4 left-4 bg-amber-600 text-white px-3 py-1 rounded-full text-sm font-semibold">
-                    {categories.find((c) => c.id === (item.category as any))
-                      ?.name ?? GALLERY_CATEGORY_META[item.category].label}
+                    {t(GALLERY_CATEGORY_KEYS[item.category])}
                   </div>
                 </div>
 
                 <div className="p-6">
                   <h3 className="font-semibold text-lg text-amber-800 mb-2 group-hover:text-amber-900 transition-colors">
-                    {item.title}
+                    {t(item.titleKey)}
                   </h3>
-                  <p className="text-gray-600 text-sm leading-relaxed">
-                    {item.description}
-                  </p>
+                  {item.descKey && (
+                    <p className="text-gray-600 text-sm leading-relaxed">
+                      {t(item.descKey)}
+                    </p>
+                  )}
                 </div>
               </div>
             ))}
@@ -149,11 +153,9 @@ const Gallery: React.FC = () => {
           {filteredItems.length === 0 && (
             <div className="text-center py-12">
               <p className="text-xl text-gray-600 mb-4">
-                Belum ada konten untuk kategori ini
+                {t("gallery.emptyTitle")}
               </p>
-              <p className="text-gray-500">
-                Kami sedang menambahkan lebih banyak foto dan video.
-              </p>
+              <p className="text-gray-500">{t("gallery.emptyDesc")}</p>
             </div>
           )}
         </div>
@@ -169,7 +171,7 @@ const Gallery: React.FC = () => {
             <button
               onClick={closeModal}
               className="absolute -top-12 right-0 text-white hover:text-amber-300 transition"
-              aria-label="Tutup"
+              aria-label={t("common.close")}
             >
               <X className="h-8 w-8" />
             </button>
