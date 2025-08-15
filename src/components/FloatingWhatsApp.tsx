@@ -3,7 +3,7 @@ import { Icon } from "@iconify/react";
 
 const FloatingWhatsApp = () => {
   const handleWhatsAppClick = () => {
-    const phoneNumber = "6281234567890";
+    const phoneNumber = "+62811294646";
     const message =
       "Halo! Saya tertarik dengan produk kopi dan rempah-rempah Anda.";
     const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(
