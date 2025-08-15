@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X, ChevronDown } from "lucide-react";
 import { useLanguage } from "../contexts/LanguageContext";
@@ -7,25 +7,27 @@ import LanguageSelector from "./LanguageSelector";
 const Header = () => {
   const { t } = useLanguage();
 
+  // UI state — tanpa useEffect, semuanya event-driven
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isProductDropdownOpen, setIsProductDropdownOpen] = useState(false);
   const [isMobileProductsOpen, setIsMobileProductsOpen] = useState(false);
 
   const location = useLocation();
 
+  // === Data ===
   const productCategories = [
     {
-      name: t("products.categories.all"),
+      name: t("nav.allProducts"),
       href: "/products?category=coffee",
       category: "all",
     },
     {
-      name: t("nav.categories.robusta"),
+      name: "Robusta",
       href: "/products?category=coffee&bean=robusta",
       category: "robusta",
     },
     {
-      name: t("nav.categories.arabica"),
+      name: "Arabica",
       href: "/products?category=coffee&bean=arabica",
       category: "arabica",
     },
@@ -39,11 +41,13 @@ const Header = () => {
     { name: t("nav.terms"), href: "/terms" },
   ];
 
+  // === Helpers ===
   const isPathActive = (path: string) => location.pathname === path;
   const isProductsActive =
     location.pathname.startsWith("/products") ||
     location.pathname.startsWith("/product");
 
+  // === Handlers ===
   const closeAllMenus = () => {
     setIsProductDropdownOpen(false);
     setIsMenuOpen(false);
@@ -66,6 +70,9 @@ const Header = () => {
                 alt="Logo"
                 className="h-12 w-12 md:h-14 md:w-14 object-contain"
               />
+              <span className="hidden sm:inline font-playfair text-lg md:text-xl font-bold text-amber-800">
+                {/* Optional tagline */}
+              </span>
             </Link>
           </div>
 
@@ -75,7 +82,7 @@ const Header = () => {
 
             {navigation.map((item) => (
               <Link
-                key={item.href}
+                key={item.name}
                 to={item.href}
                 onClick={closeAllMenus}
                 className={`text-sm font-medium rounded-md px-1.5 py-1 transition-colors duration-200 ${
@@ -124,15 +131,16 @@ const Header = () => {
                 </button>
               </div>
 
+              {/* NOTE: TIDAK ADA mt-2 di sini */}
               <div
                 role="menu"
                 className={`absolute left-0 top-full w-56 rounded-xl border border-gray-100 bg-white shadow-lg/50 shadow
-                transition-opacity duration-150
-                ${
-                  isProductDropdownOpen
-                    ? "opacity-100 pointer-events-auto"
-                    : "opacity-0 pointer-events-none"
-                }`}
+      transition-opacity duration-150
+      ${
+        isProductDropdownOpen
+          ? "opacity-100 pointer-events-auto"
+          : "opacity-0 pointer-events-none"
+      }`}
               >
                 <div className="py-2">
                   {productCategories.map((cat) => (
@@ -190,7 +198,7 @@ const Header = () => {
 
             {navigation.map((item) => (
               <Link
-                key={item.href}
+                key={item.name}
                 to={item.href}
                 onClick={closeAllMenus}
                 className={`block px-3 py-2 text-base font-medium rounded transition ${

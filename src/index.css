@@ -1,25 +1,36 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700;800&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700;800&display=swap");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-* {
-  scroll-behavior: smooth;
-}
-
+/* ===== Base fonts ===== */
 .font-playfair {
-  font-family: 'Playfair Display', serif;
+  font-family: "Playfair Display", serif;
 }
-
 .font-poppins {
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
 }
-
 body {
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
 }
 
-/* Custom animations */
+/* ===== Haluskan scroll & stabilkan gutter scrollbar ===== */
+html {
+  scroll-behavior: smooth; /* pindahkan dari * ke html */
+  scrollbar-gutter: stable both-edges; /* cegah konten "geser" saat scrollbar muncul */
+}
+body {
+  overflow-x: hidden;
+} /* cegah jitter horizontal */
+
+/* ===== JANGAN transisikan semua properti untuk semua elemen ===== */
+/* Target elemen interaktif saja + properti yang aman di-GPU */
+:where(a, button, input, select, textarea) {
+  transition: color 0.2s ease, background-color 0.2s ease,
+    border-color 0.2s ease, box-shadow 0.2s ease, transform 0.15s ease;
+}
+
+/* ===== Animasi util ===== */
 @keyframes fadeInUp {
   from {
     opacity: 0;
@@ -30,39 +41,35 @@ body {
     transform: translateY(0);
   }
 }
-
 .animate-fade-in-up {
   animation: fadeInUp 0.6s ease-out forwards;
 }
 
-/* Smooth transitions for all interactive elements */
-* {
-  transition: all 0.2s ease-in-out;
-}
-
-/* Custom scrollbar */
+/* ===== Scrollbar ===== */
 ::-webkit-scrollbar {
   width: 8px;
 }
-
 ::-webkit-scrollbar-track {
   background: #f1f1f1;
 }
-
 ::-webkit-scrollbar-thumb {
-  background: #8B4513;
+  background: #8b4513;
   border-radius: 4px;
 }
-
 ::-webkit-scrollbar-thumb:hover {
-  background: #A0522D;
+  background: #a0522d;
 }
 
-/* Focus styles for accessibility */
+/* ===== Focus ring ===== */
 button:focus,
 input:focus,
 textarea:focus,
 select:focus {
-  outline: 2px solid #8B4513;
+  outline: 2px solid #8b4513;
   outline-offset: 2px;
+}
+
+/* ===== Opsional: haluskan header blur di Safari ===== */
+header {
+  will-change: backdrop-filter;
 }

@@ -90,7 +90,7 @@ export const translations = {
           name: "MUHAMMAD RYAN GUMAY",
           role: "FOUNDER & CEO",
           description:
-            "Pendiri dan pemimpin utama yang membentuk arah strategis perusahaan sejak awal berdiri.",
+            "Pendiri yang membentuk arah strategis perusahaan sejak awal berdiri.",
         },
         manager: {
           name: "YOSEP P GUMAY",

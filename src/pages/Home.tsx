@@ -10,11 +10,13 @@ import {
   ChevronLeft,
   ChevronRight,
 } from "lucide-react";
+import { animated } from "@react-spring/web";
 import { useLanguage } from "../contexts/LanguageContext";
 import Footer from "../components/Footer";
 import { galleryItems, GALLERY_CATEGORY_KEYS } from "../data/gallery";
 import { getCoffeeProducts } from "../data/products";
-import Reveal from "../components/Reveal"; // ⬅️ tambah
+import Reveal from "../components/Reveal";
+import { useSpringButton } from "../hooks/useSpringButton";
 
 const HERO_IMAGES = [
   {
@@ -93,6 +95,12 @@ const Home: React.FC = () => {
   // ======= Best products (kopi, 2 item) =======
   const bestProducts = React.useMemo(() => getCoffeeProducts().slice(0, 2), []);
 
+  // ======= Spring buttons (ringan) =======
+  const prodCta = useSpringButton();
+  const contactCta = useSpringButton();
+  const viewAllCta = useSpringButton();
+  const galleryCta = useSpringButton();
+
   return (
     <div className="min-h-screen bg-white">
       {/* HERO */}
@@ -165,19 +173,26 @@ const Home: React.FC = () => {
               </div>
 
               <div className="flex flex-col sm:flex-row gap-4">
-                <Link
-                  to="/products?category=coffee"
-                  className="bg-amber-600 text-white px-8 py-4 rounded-full font-semibold hover:bg-amber-700 transition transform hover:scale-105 inline-flex items-center justify-center"
-                >
-                  {t("home.hero.viewProducts")}{" "}
-                  <ArrowRight className="ml-2 h-5 w-5" />
-                </Link>
-                <Link
-                  to="/contact"
-                  className="border-2 border-white text-white px-8 py-4 rounded-full font-semibold hover:bg-white hover:text-amber-800 transition inline-flex items-center justify-center"
-                >
-                  {t("home.hero.contactUs")}
-                </Link>
+                <animated.div style={prodCta.style}>
+                  <Link
+                    to="/products?category=coffee"
+                    {...prodCta.bind}
+                    className="bg-amber-600 text-white px-8 py-4 rounded-full font-semibold hover:bg-amber-700 transition inline-flex items-center justify-center"
+                  >
+                    {t("home.hero.viewProducts")}{" "}
+                    <ArrowRight className="ml-2 h-5 w-5" />
+                  </Link>
+                </animated.div>
+
+                <animated.div style={contactCta.style}>
+                  <Link
+                    to="/contact"
+                    {...contactCta.bind}
+                    className="border-2 border-white text-white px-8 py-4 rounded-full font-semibold hover:bg-white hover:text-amber-800 transition inline-flex items-center justify-center"
+                  >
+                    {t("home.hero.contactUs")}
+                  </Link>
+                </animated.div>
               </div>
             </div>
           </Reveal>
@@ -209,7 +224,6 @@ const Home: React.FC = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {[
-              // empat kartu
               {
                 icon: Award,
                 title: t("home.whyUs.quality.title"),
@@ -257,7 +271,7 @@ const Home: React.FC = () => {
           </Reveal>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {bestProducts.map((product, idx) => (
+            {bestProducts.map((product) => (
               <Reveal key={product.id} y={20}>
                 <div className="bg-white rounded-2xl shadow-lg overflow-hidden group hover:shadow-xl transition transform hover:-translate-y-2">
                   <div className="relative overflow-hidden">
@@ -290,13 +304,16 @@ const Home: React.FC = () => {
 
           <Reveal>
             <div className="text-center mt-12">
-              <Link
-                to="/products?category=coffee"
-                className="bg-amber-800 text-white px-8 py-4 rounded-full font-semibold hover:bg-amber-900 transition inline-flex items-center"
-              >
-                {t("home.products.viewAll")}{" "}
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </Link>
+              <animated.div style={viewAllCta.style} className="inline-block">
+                <Link
+                  to="/products?category=coffee"
+                  {...viewAllCta.bind}
+                  className="bg-amber-800 text-white px-8 py-4 rounded-full font-semibold hover:bg-amber-900 transition inline-flex items-center"
+                >
+                  {t("home.products.viewAll")}{" "}
+                  <ArrowRight className="ml-2 h-5 w-5" />
+                </Link>
+              </animated.div>
             </div>
           </Reveal>
         </div>
@@ -395,13 +412,16 @@ const Home: React.FC = () => {
 
           <Reveal>
             <div className="text-center mt-12">
-              <Link
-                to="/gallery"
-                className="bg-amber-600 text-white px-8 py-4 rounded-full font-semibold hover:bg-amber-700 transition inline-flex items-center"
-              >
-                {t("home.gallery.viewGallery")}{" "}
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </Link>
+              <animated.div style={galleryCta.style} className="inline-block">
+                <Link
+                  to="/gallery"
+                  {...galleryCta.bind}
+                  className="bg-amber-600 text-white px-8 py-4 rounded-full font-semibold hover:bg-amber-700 transition inline-flex items-center"
+                >
+                  {t("home.gallery.viewGallery")}{" "}
+                  <ArrowRight className="ml-2 h-5 w-5" />
+                </Link>
+              </animated.div>
             </div>
           </Reveal>
         </div>
